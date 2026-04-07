@@ -1,7 +1,7 @@
 # iKnoWay — Personal Site
 
-iKnoWay の個人ポートフォリオサイト。
-アクセスするたびにテーマがランダムで切り替わり、毎回違う表情を見せるサイトです。
+アニメと映画を愛するオタク、iKnoWay の個人サイト。
+アクセスするたびにテーマがランダムで切り替わり、毎回違う表情を見せます。
 
 ---
 
@@ -17,24 +17,28 @@ iKnoWay の個人ポートフォリオサイト。
 ## ディレクトリ構成
 
 ```
-/site
-├─ index.html          エントリーポイント（ローダー + テーマ選択）
-├─ router.js           テーマ選択ロジック
+/docs                    GitHub Pages 公開 & 開発ディレクトリ
+├─ index.html            エントリーポイント（ローダー + テーマ選択）
+├─ router.js             テーマ選択ロジック
 │
 ├─ themes/
-│   ├─ classy/         おしゃれ系テーマ（index.html / style.css / script.js）
-│   ├─ anime/          サイバーパンクアニメ系テーマ（index.html / style.css / script.js）
-│   └─ future-theme/   追加テーマ用プレースホルダー
-│
-├─ assets/
-│   ├─ images/         プロフィール画像などの静的素材
-│   ├─ fonts/          ローカルフォント（任意）
-│   └─ sounds/         サウンドエフェクト（任意）
+│   ├─ classy/           おしゃれ系テーマ（index.html / style.css / script.js）
+│   └─ anime/            サイバーパンクアニメ系テーマ（index.html / style.css / script.js）
 │
 └─ shared/
-    ├─ analytics.js    プライバシー配慮型アナリティクス
-    └─ utils.js        全テーマ共通ユーティリティ関数
+    ├─ data.js           全テーマ共通コンテンツデータ
+    └─ utils.js          全テーマ共通ユーティリティ関数
 ```
+
+---
+
+## コンテンツの仕組み
+
+プロフィール・お気に入りアニメ・お気に入り映画・連絡先などのコンテンツは
+`shared/data.js` に一元管理されています。各テーマは同じデータを読み取り、
+テーマ固有のデザインで描画します。
+
+**コンテンツを変更したいときは `shared/data.js` を編集するだけでOK。**
 
 ---
 
@@ -45,10 +49,10 @@ iKnoWay の個人ポートフォリオサイト。
 
 | URL | 動作 |
 |---|---|
-| `site/index.html` | ランダムでテーマを選択・表示 |
-| `site/index.html?switch=1` | 現在と**異なる**テーマに強制切替 |
-| `site/index.html?theme=classy` | `classy` テーマを固定表示（開発用） |
-| `site/index.html?theme=anime` | `anime` テーマを固定表示（開発用） |
+| `docs/index.html` | ランダムでテーマを選択・表示 |
+| `docs/index.html?switch=1` | 現在と**異なる**テーマに強制切替 |
+| `docs/index.html?theme=classy` | `classy` テーマを固定表示（開発用） |
+| `docs/index.html?theme=anime` | `anime` テーマを固定表示（開発用） |
 
 各ページ内の「Switch Theme / GACHA」ボタンは `?switch=1` を使っています。
 
@@ -67,7 +71,7 @@ iKnoWay の個人ポートフォリオサイト。
 
 ## セットアップ・デプロイ
 
-ビルドステップは不要です。`/site` ディレクトリをそのまま静的ホスティングに配置するだけで動作します。
+ビルドステップは不要です。`/docs` ディレクトリをそのまま静的ホスティングに配置するだけで動作します。
 
 ### ローカルで確認する
 
@@ -75,35 +79,34 @@ iKnoWay の個人ポートフォリオサイト。
 
 ```bash
 # Python がある場合
-cd site && python3 -m http.server 8080
+cd docs && python3 -m http.server 8080
 
 # Node.js がある場合
-npx serve site
+npx serve docs
 ```
 
 その後 `http://localhost:8080` にアクセス。
 
-### 静的ホスティングへのデプロイ
+### GitHub Pages（現在の設定）
 
-| サービス | 設定 |
-|---|---|
-| GitHub Pages | `docs/` フォルダを公開ディレクトリとして使用（Branch `main` / Folder `/docs`）。`site/` 編集後は `cp -r site/. docs/` で同期すること |
-| Netlify | リポジトリ接続・公開ディレクトリを `site` に指定 |
-| Vercel | 同上 |
-| Cloudflare Pages | 同上 |
+- **公開ディレクトリ**: `/docs`（Branch `main` / Folder `/docs`）
+- **公開 URL**: `https://iknoway-home.github.io/my-website/`
+
+`docs/` を編集してプッシュすればそのまま反映されます。同期作業は不要です。
 
 ---
 
 ## テーマを追加したい場合
 
-1. `site/themes/` に新ディレクトリを作成し `index.html` / `style.css` / `script.js` を実装
-2. `site/router.js` の `THEMES` 配列にエントリを追加
+1. `docs/themes/` に新ディレクトリを作成し `index.html` / `style.css` / `script.js` を実装
+2. `script.js` 内で `window.__data` を読み取ってコンテンツを描画する
+3. `docs/router.js` の `THEMES` 配列にエントリを追加
 
 ```js
 const THEMES = [
   { id: 'classy',       path: 'themes/classy/index.html',       weight: 1 },
   { id: 'anime',        path: 'themes/anime/index.html',        weight: 1 },
-  { id: 'future-theme', path: 'themes/future-theme/index.html', weight: 1 }, // ← 追加
+  { id: 'future-theme', path: 'themes/future-theme/index.html', weight: 1 }, // <- 追加
 ];
 ```
 
@@ -113,31 +116,13 @@ const THEMES = [
 
 ## カスタマイズ
 
-各テーマ内の以下の箇所を自分の情報に書き換えてください。
+コンテンツの変更は `docs/shared/data.js` のみで行えます。
 
-- メールアドレス（`href="mailto:..."` の部分）
-- GitHub / Twitter / LinkedIn の URL
-- プロジェクト名・説明・タグ
-- スキル一覧
-- プロフィール画像（`assets/images/` に画像を置いて HTML のコメントを解除）
-
----
-
-## デザイン方針（2026 UI/UX トレンド）
-
-このサイトは 2026 年の主要 UI/UX トレンドを踏まえて設計・改善しています。
-
-| トレンド | 本サイトでの実装方針 |
-|---|---|
-| **マイクロインタラクション** | ホバー・クリック・スクロールすべてに小さな動きを付与。静的な要素はゼロを目標に |
-| **表現的タイポグラフィ** | `clamp()` によるレスポンシブ大見出し / グラデーションテキスト / 文字スタガーアニメ |
-| **ベントグリッド** | プロジェクト・スキルセクションを CSS Grid の大小カードで構成 |
-| **ドーパミンデザイン** | 高コントラスト・高彩度配色で「見ていて気持ちいい」体験を優先 |
-| **スクロール連動アニメ** | `IntersectionObserver` でセクション入場アニメ・カウントアップを制御 |
-| **アクセシビリティ** | WCAG AA 準拠 / `prefers-reduced-motion` 対応 / フォーカス可視化 |
-| **サステナブル Web** | WebP 画像 / `transform`・`opacity` のみのアニメ / 必要なフォントウェイトのみロード |
-
-> 詳細な実装ガイドラインは [CLAUDE.md](CLAUDE.md) の「2026 UI/UX トレンドガイドライン」セクションを参照してください。
+- プロフィール情報（名前・役割・自己紹介・特徴）
+- お気に入りアニメ一覧（タイトル・コメント・タグ）
+- お気に入り映画一覧（タイトル・コメント・タグ）
+- 連絡先（メールアドレス・メッセージ）
+- SNS リンク（GitHub / Twitter など）
 
 ---
 

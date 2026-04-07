@@ -10,9 +10,8 @@
 
 const THEMES = [
   { id: 'classy', path: 'themes/classy/index.html', weight: 1 },
+  { id: 'cyber',  path: 'themes/cyber/index.html',  weight: 1 },
   { id: 'anime',  path: 'themes/anime/index.html',  weight: 1 },
-  // Add future themes here:
-  // { id: 'future-theme', path: 'themes/future-theme/index.html', weight: 1 },
 ];
 
 /** Weighted random selection from a list of themes. */

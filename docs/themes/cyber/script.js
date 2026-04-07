@@ -1,9 +1,116 @@
 /* ============================================================
-   ANIME THEME — script.js
+   CYBER THEME — script.js
    Canvas particles · Glitch · Counters · Neon effects
    ============================================================ */
 
 'use strict';
+
+// ── Render shared data ───────────────────────────────────
+(function renderData() {
+  const d = window.__data;
+  if (!d) return;
+
+  // Hero
+  const heroRole = document.getElementById('hero-role-anime');
+  const heroName = document.getElementById('hero-name-anime');
+  const heroTagJp = document.getElementById('hero-tagline-jp');
+  const heroTagEn = document.getElementById('hero-tagline-en');
+  if (heroRole) heroRole.textContent = d.profile.role.toUpperCase();
+  if (heroName) {
+    heroName.textContent = d.profile.name;
+    heroName.dataset.text = d.profile.name;
+  }
+  const lines = d.profile.tagline.split('\n');
+  if (heroTagJp) heroTagJp.textContent = lines[0] || '';
+  if (heroTagEn) heroTagEn.textContent = lines[1] || '';
+
+  // Hero stats
+  const heroStats = document.getElementById('hero-stats');
+  if (heroStats) {
+    heroStats.innerHTML = d.heroStats.map((s, i) =>
+      (i > 0 ? '<div class="stat-divider"></div>' : '') +
+      '<div class="stat">' +
+        '<span class="stat-num" data-count="' + s.count + '">0</span>' +
+        '<span class="stat-unit">' + s.unit + '</span>' +
+        '<span class="stat-label">' + s.label + '</span>' +
+      '</div>'
+    ).join('');
+  }
+
+  // Profile ID card
+  const idData = document.getElementById('profile-id-data');
+  if (idData) {
+    idData.innerHTML =
+      '<div class="id-row"><span>NAME</span><strong>' + d.profile.name + '</strong></div>' +
+      '<div class="id-row"><span>CLASS</span><strong>Otaku S+</strong></div>' +
+      '<div class="id-row"><span>BASE</span><strong>' + d.profile.facts[0].value + '</strong></div>' +
+      '<div class="id-row"><span>EXP</span><strong>' + d.profile.facts[1].value + '</strong></div>';
+  }
+
+  // About paragraphs
+  const aboutP = document.getElementById('about-paragraphs-anime');
+  if (aboutP) {
+    aboutP.innerHTML = d.profile.about.map(t => '<p>' + t + '</p>').join('');
+  }
+
+  // Trait grid
+  const traitGrid = document.getElementById('trait-grid');
+  if (traitGrid) {
+    traitGrid.innerHTML = d.profile.traits.map(t =>
+      '<div class="trait-chip">' + t + '</div>'
+    ).join('');
+  }
+
+  // Anime grid
+  const animeGrid = document.getElementById('anime-grid');
+  if (animeGrid) {
+    animeGrid.innerHTML = d.anime.map((a, i) =>
+      '<article class="work-card reveal">' +
+        '<div class="card-slash"></div>' +
+        '<div class="card-inner">' +
+          '<div class="card-num">' + String(i + 1).padStart(2, '0') + '</div>' +
+          '<h3>' + a.title + '</h3>' +
+          '<p>' + a.comment + '</p>' +
+          '<div class="card-tags">' + a.tags.map(t => '<span>' + t + '</span>').join('') + '</div>' +
+        '</div>' +
+        '<div class="card-glow"></div>' +
+      '</article>'
+    ).join('');
+  }
+
+  // Movies grid
+  const moviesGrid = document.getElementById('movies-grid');
+  if (moviesGrid) {
+    moviesGrid.innerHTML = d.movies.map((m, i) =>
+      '<article class="work-card reveal">' +
+        '<div class="card-slash"></div>' +
+        '<div class="card-inner">' +
+          '<div class="card-num">' + String(i + 1).padStart(2, '0') + '</div>' +
+          '<h3>' + m.title + '</h3>' +
+          '<p>' + m.comment + '</p>' +
+          '<div class="card-tags">' + m.tags.map(t => '<span>' + t + '</span>').join('') + '</div>' +
+        '</div>' +
+        '<div class="card-glow"></div>' +
+      '</article>'
+    ).join('');
+  }
+
+  // Contact
+  const contactMsg = document.getElementById('contact-message-anime');
+  const contactEmail = document.getElementById('contact-email-anime');
+  const contactSocial = document.getElementById('contact-social-anime');
+  if (contactMsg) contactMsg.textContent = '> ' + d.contact.message;
+  if (contactEmail) {
+    contactEmail.href = 'mailto:' + d.contact.email;
+  }
+  if (contactSocial) {
+    contactSocial.innerHTML = d.social.map(s =>
+      '<a href="' + s.url + '" target="_blank" rel="noopener" aria-label="' + s.name + '">' +
+      (s.icon ? '<span class="social-icon">' + s.icon + '</span>' : '') +
+      '<span>' + s.name + '</span></a>'
+    ).join('');
+  }
+})();
 
 // ── Canvas particle field ─────────────────────────────────
 (function initParticles() {
@@ -141,18 +248,6 @@ if (plFill) {
   }, { threshold: 0.5 });
   plObserver.observe(plFill);
 }
-
-// ── Skill bar animation ────────────────────────────────────
-const skillFills = document.querySelectorAll('.skill-bar-fill');
-const skillObserver = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      setTimeout(() => e.target.classList.add('animated'), 200);
-      skillObserver.unobserve(e.target);
-    }
-  });
-}, { threshold: 0.3 });
-skillFills.forEach(el => skillObserver.observe(el));
 
 // ── Counter animation (hero stats) ────────────────────────
 function animateCount(el, target, duration = 1400) {

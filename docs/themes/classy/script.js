@@ -2,6 +2,72 @@
    CLASSY THEME — script.js
    ============================================================ */
 
+// ── Render shared data ───────────────────────────────────
+(function renderData() {
+  const d = window.__data;
+  if (!d) return;
+
+  // Hero
+  const heroName = document.getElementById('hero-name');
+  const heroRole = document.getElementById('hero-role');
+  const heroTagline = document.getElementById('hero-tagline');
+  if (heroName) heroName.textContent = d.profile.name;
+  if (heroRole) heroRole.textContent = d.profile.role;
+  if (heroTagline) heroTagline.innerHTML = d.profile.tagline.replace(/\n/g, '<br>');
+
+  // About paragraphs
+  const aboutP = document.getElementById('about-paragraphs');
+  if (aboutP) {
+    aboutP.innerHTML = d.profile.about.map(t => '<p>' + t + '</p>').join('');
+  }
+
+  // About facts
+  const factsUl = document.getElementById('about-facts');
+  if (factsUl) {
+    factsUl.innerHTML = d.profile.facts.map(f =>
+      '<li><span>' + f.label + '</span>' + f.value + '</li>'
+    ).join('');
+  }
+
+  // Anime grid
+  const animeGrid = document.getElementById('anime-grid');
+  if (animeGrid) {
+    animeGrid.innerHTML = d.anime.map((a, i) =>
+      '<article class="work-card reveal">' +
+        '<div class="work-number">' + String(i + 1).padStart(2, '0') + '</div>' +
+        '<h3>' + a.title + '</h3>' +
+        '<p>' + a.comment + '</p>' +
+        '<div class="work-tags">' + a.tags.map(t => '<span>' + t + '</span>').join('') + '</div>' +
+      '</article>'
+    ).join('');
+  }
+
+  // Movies grid
+  const moviesGrid = document.getElementById('movies-grid');
+  if (moviesGrid) {
+    moviesGrid.innerHTML = d.movies.map((m, i) =>
+      '<article class="work-card reveal">' +
+        '<div class="work-number">' + String(i + 1).padStart(2, '0') + '</div>' +
+        '<h3>' + m.title + '</h3>' +
+        '<p>' + m.comment + '</p>' +
+        '<div class="work-tags">' + m.tags.map(t => '<span>' + t + '</span>').join('') + '</div>' +
+      '</article>'
+    ).join('');
+  }
+
+  // Contact
+  const contactMsg = document.getElementById('contact-message');
+  const contactSocial = document.getElementById('contact-social');
+  if (contactMsg) contactMsg.textContent = d.contact.message;
+  if (contactSocial) {
+    contactSocial.innerHTML = d.social.map(s =>
+      '<a href="' + s.url + '" target="_blank" rel="noopener" aria-label="' + s.name + '">' +
+      (s.icon ? '<span class="social-icon">' + s.icon + '</span>' : '') +
+      '<span>' + s.name + '</span></a>'
+    ).join('');
+  }
+})();
+
 // ── Scroll-triggered header ───────────────────────────────
 const header = document.getElementById('site-header');
 

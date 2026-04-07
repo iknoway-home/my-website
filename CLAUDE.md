@@ -6,8 +6,8 @@
 
 ## プロジェクト概要
 
-iKnoWay の個人ポートフォリオサイト。
-アクセスするたびに **テーマがランダムで切り替わる** 仕組みを持ち、現在 2 つのテーマが実装されています。
+iKnoWay の個人サイト。アニメと映画を愛するオタクのプロフィール・お気に入り作品を紹介する。
+アクセスするたびに **テーマがランダムで切り替わる** 仕組みを持ち、現在 2 つのテーマが実装されている。
 
 | テーマ | コンセプト |
 |---|---|
@@ -19,47 +19,63 @@ iKnoWay の個人ポートフォリオサイト。
 ## ディレクトリ構成
 
 ```
-/site
-├─ index.html         エントリーポイント（ローダー画面）
-├─ router.js          テーマ選択ロジック（重み付きランダム）
+/docs                    GitHub Pages 公開ディレクトリ（開発もここで直接行う）
+├─ index.html            エントリーポイント（ローダー画面）
+├─ router.js             テーマ選択ロジック（重み付きランダム）
 │
 ├─ themes/
-│   ├─ classy/        おしゃれ系テーマ
+│   ├─ classy/           おしゃれ系テーマ
 │   │   ├─ index.html
 │   │   ├─ style.css
 │   │   └─ script.js
 │   │
-│   ├─ anime/         サイバーパンクアニメ系テーマ
-│   │   ├─ index.html
-│   │   ├─ style.css
-│   │   └─ script.js
-│   │
-│   └─ future-theme/  追加テーマ用（未実装）
-│
-├─ assets/
-│   ├─ images/        プロフィール画像など
-│   ├─ fonts/         ローカルフォント（任意）
-│   └─ sounds/        サウンドエフェクト（任意）
+│   └─ anime/            サイバーパンクアニメ系テーマ
+│       ├─ index.html
+│       ├─ style.css
+│       └─ script.js
 │
 └─ shared/
-    ├─ analytics.js   アナリティクス（プライバシー配慮型スタブ）
-    └─ utils.js       全テーマ共通ユーティリティ
+    ├─ data.js           全テーマ共通コンテンツデータ（プロフィール・アニメ・映画・連絡先）
+    └─ utils.js          全テーマ共通ユーティリティ
+```
+
+---
+
+## コンテンツデータの仕組み
+
+すべてのコンテンツ（プロフィール、お気に入りアニメ、お気に入り映画、連絡先）は
+`shared/data.js` に `window.__data` として一元管理されている。
+
+各テーマの `script.js` がページ読み込み時に `window.__data` からデータを読み取り、
+テーマ固有のHTMLを動的に生成する。**コンテンツを更新するときは `shared/data.js` だけを編集すればよい。**
+
+```js
+// data.js の構造
+window.__data = {
+  profile: { name, role, tagline, about, facts, traits },
+  heroStats: [ { count, unit, label } ],
+  anime: [ { title, comment, tags } ],
+  movies: [ { title, comment, tags } ],
+  contact: { message, email },
+  social: [ { name, url } ]
+};
 ```
 
 ---
 
 ## テーマ追加の手順
 
-1. `site/themes/` に新しいディレクトリを作成する
+1. `docs/themes/` に新しいディレクトリを作成する
 2. `index.html` / `style.css` / `script.js` を実装する
-3. `site/router.js` の `THEMES` 配列にエントリを追加する
+3. `script.js` 内で `window.__data` を読み取ってコンテンツを描画するレンダリング関数を実装する
+4. `docs/router.js` の `THEMES` 配列にエントリを追加する
 
 ```js
 // router.js
 const THEMES = [
   { id: 'classy',       path: 'themes/classy/index.html',       weight: 1 },
   { id: 'anime',        path: 'themes/anime/index.html',        weight: 1 },
-  { id: 'future-theme', path: 'themes/future-theme/index.html', weight: 1 }, // ← 追加
+  { id: 'future-theme', path: 'themes/future-theme/index.html', weight: 1 }, // <- 追加
 ];
 ```
 
@@ -71,9 +87,9 @@ const THEMES = [
 
 | 方法 | URL / 操作 |
 |---|---|
-| ランダム（通常） | `site/index.html` にアクセス |
-| 強制切替（別テーマ） | `site/index.html?switch=1` |
-| 開発用（固定） | `site/index.html?theme=classy` または `?theme=anime` |
+| ランダム（通常） | `docs/index.html` にアクセス |
+| 強制切替（別テーマ） | `docs/index.html?switch=1` |
+| 開発用（固定） | `docs/index.html?theme=classy` または `?theme=anime` |
 
 セッション中は `sessionStorage` でテーマを保持するので、リロードしても同じテーマが表示されます。
 `?switch=1` を使うと現在のテーマとは**必ず異なる**テーマが選ばれます。
@@ -82,6 +98,10 @@ const THEMES = [
 
 ## 共通資産の使い方
 
+### shared/data.js
+
+全テーマで `window.__data` としてアクセスできます。コンテンツの変更はこのファイルのみで行う。
+
 ### shared/utils.js
 
 全テーマで `window.__utils` としてアクセスできます。
@@ -89,11 +109,6 @@ const THEMES = [
 ```js
 const { $, $$, debounce, throttle, lerp, clamp, copyToClipboard } = window.__utils;
 ```
-
-### shared/analytics.js
-
-`window.__analytics.send(eventName, props)` でカスタムイベントを送信できます。
-デフォルトはコンソールへのログ出力（スタブ）。本番運用時は `CONFIG.endpoint` を設定してください。
 
 ---
 
@@ -114,19 +129,7 @@ const { $, $$, debounce, throttle, lerp, clamp, copyToClipboard } = window.__uti
 - **Canvas パーティクル**: `#particle-canvas` にフルスクリーン描画。マウスで反発。
 - **スキャンライン**: `.scanlines` を `position: fixed` で全画面に重ねる
 - **グリッチ**: `.glitch` に `data-text` 属性を付与し `::before` / `::after` で色ずれ
-- **クリックバースト**: `document.addEventListener('click')` で ⚡ などが放射状に飛ぶ
-
----
-
-## パーソナル情報の更新
-
-以下の箇所を実際の情報に書き換えてください。
-
-| ファイル | 更新箇所 |
-|---|---|
-| `themes/classy/index.html` | メール・SNS リンク・プロジェクト内容・スキル |
-| `themes/anime/index.html`  | メール・SNS リンク・プロジェクト内容・スキル |
-| `assets/images/`           | プロフィール画像（`profile.jpg` などを配置してHTMLのコメントを解除） |
+- **クリックバースト**: `document.addEventListener('click')` で 符号などが放射状に飛ぶ
 
 ---
 
@@ -147,48 +150,15 @@ CLAUDE.md は**Claude Code が内部的に参照する実装ガイド**として
 ## デプロイ
 
 このサイトは純粋な静的ファイル（HTML / CSS / JS のみ）です。
-`/site` ディレクトリをそのまま任意の静的ホスティングサービスに置けば動作します。
-
-| サービス例 | 手順 |
-|---|---|
-| GitHub Pages | `docs/` フォルダを公開ディレクトリとして使用（後述） |
-| Netlify / Vercel | リポジトリを接続してルートを `site/` に設定 |
-| Cloudflare Pages | 同上 |
-
-ビルドステップは不要です。
+`/docs` ディレクトリをそのまま任意の静的ホスティングサービスに置けば動作します。
 
 ### GitHub Pages の構成（現在の設定）
 
-このリポジトリは **GitHub Pages** でのホスティングを前提に、以下の構成をとっています。
-
 - **公開ディレクトリ**: `/docs`（GitHub Pages の設定: Branch `main` / Folder `/docs`）
-- **開発ディレクトリ**: `/site`（実際の編集はこちらで行う）
+- **開発ディレクトリ**: `/docs`（公開ディレクトリと同一。同期不要）
 - **公開 URL**: `https://iknoway-home.github.io/my-website/`
 
-> GitHub Pages は `docs/` という名前のフォルダのみを公開ディレクトリとして指定できるため、
-> `site/` とは別に `docs/` を用意しています。
-
-### サイト更新時の手順（重要）
-
-`site/` を編集した後、**必ず `docs/` にも同期すること。**
-同期を忘れると本番サイトに変更が反映されません。
-
-```bash
-# site/ の内容を docs/ に上書きコピー
-cp -r site/. docs/
-
-# まとめてコミット
-git add site/ docs/
-git commit -m "Update site and sync docs"
-git push
-```
-
-#### 同期が必要なタイミング
-
-- テーマの HTML / CSS / JS を変更したとき
-- `router.js` を変更したとき
-- `shared/` 以下を変更したとき
-- `assets/` に画像などを追加したとき
+ビルドステップは不要です。`docs/` を編集してプッシュすればそのまま反映されます。
 
 ---
 
@@ -205,7 +175,6 @@ git push
 - ボタン: `transform: scale` + `box-shadow` の変化（`transition: 200ms ease`）
 - リンク: アンダーラインが左から右にスライドするアニメ（`::after` + `scaleX`）
 - カード: ホバー時に `translateY(-4px)` + 影が深くなる
-- フォームフィールド（連絡先など）: フォーカス時にラベルが上に浮く（Floating Label）
 - `anime` テーマのクリックバーストは既に実装済み — 他テーマにも独自バーストを追加する
 
 ```css
@@ -224,7 +193,7 @@ git push
 - スクロールトリガーで文字が1文字ずつ / 1行ずつ現れるアニメーション（`IntersectionObserver` 活用）
 
 #### 3. ベントグリッドレイアウト
-> プロジェクト・スキルセクションをカード型グリッドで整理する
+> アニメ・映画セクションをカード型グリッドで整理する
 
 - CSS Grid の `grid-template-areas` で大小混在のカードレイアウト
 - カード角丸: `border-radius: 16px〜24px`（角が大きいほどモダン）
@@ -252,12 +221,11 @@ git push
 > `IntersectionObserver` で要素が入るたびに演出を発火（既存の `utils.js` 活用）
 
 - セクション全体: `opacity: 0 → 1` + `translateY(30px → 0)`（`stagger` で子要素を順次フェードイン）
-- スキルバー: スクロール入場時に幅が 0 から伸びる
 - 数字カウントアップ: 実績数値などを入場時にアニメーションカウント
 
 ```js
 // 例: stagger フェードイン
-const items = $$('.skill-item');
+const items = $$('.card-item');
 observer.observe(items, (el, i) => {
   el.style.transitionDelay = `${i * 60}ms`;
   el.classList.add('visible');
@@ -287,8 +255,8 @@ observer.observe(items, (el, i) => {
 | トレンド | 理由 |
 |---|---|
 | AI 駆動 UI | バックエンドなし・静的ファイルのみのため |
-| 音声 / マルチモーダル | ポートフォリオの目的と合わない |
-| AR / VR / WebXR | 実装コストに対してポートフォリオとしての効果が薄い |
+| 音声 / マルチモーダル | サイトの目的と合わない |
+| AR / VR / WebXR | 実装コストに対して効果が薄い |
 | アジェンティック UX | エージェント操作の必要がない |
 
 ---
@@ -296,7 +264,7 @@ observer.observe(items, (el, i) => {
 ## 開発上の注意
 
 - バンドラー・フレームワーク不使用。素の HTML / CSS / JS で構成されています。
-- `shared/*.js` のエクスポートは `window.__utils` / `window.__analytics` のグローバル変数経由です。
-- `console.log` を本番コードに残さないこと。デバッグは `analytics.js` の `CONFIG.enabled` フラグで制御してください。
+- `shared/*.js` のエクスポートは `window.__utils` / `window.__data` のグローバル変数経由です。
+- `console.log` を本番コードに残さないこと。
 - 新しい CSS アニメーションを追加する際は `prefers-reduced-motion` を考慮すること（`window.__utils.prefersReducedMotion()` で確認可能）。
-- テーマ間で共通の UI パーツ（アナリティクス・ユーティリティ以外）が生まれた場合は `shared/` に切り出す。
+- テーマ間で共通の UI パーツ（ユーティリティ・データ以外）が生まれた場合は `shared/` に切り出す。

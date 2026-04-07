@@ -1,165 +1,199 @@
 /* ============================================================
    ANIME THEME — script.js
-   Canvas particles · Glitch · Counters · Neon effects
+   Sparkles · Scroll reveal · Data rendering
    ============================================================ */
 
 'use strict';
 
-// ── Canvas particle field ─────────────────────────────────
-(function initParticles() {
-  const canvas = document.getElementById('particle-canvas');
+// ── Render shared data ───────────────────────────────────
+(function renderData() {
+  var d = window.__data;
+  if (!d) return;
+
+  // Hero
+  var heroName = document.getElementById('hero-name');
+  var heroRole = document.getElementById('hero-role');
+  var heroTagline = document.getElementById('hero-tagline');
+  if (heroName) heroName.textContent = d.profile.name;
+  if (heroRole) heroRole.textContent = d.profile.role;
+  if (heroTagline) heroTagline.innerHTML = d.profile.tagline.replace(/\n/g, '<br>');
+
+  // Hero stats
+  var heroStats = document.getElementById('hero-stats');
+  if (heroStats) {
+    heroStats.innerHTML = d.heroStats.map(function (s, i) {
+      return (i > 0 ? '<div class="stat-divider"></div>' : '') +
+        '<div class="stat">' +
+          '<span class="stat-num" data-count="' + s.count + '">0</span>' +
+          '<span class="stat-unit">' + s.unit + '</span>' +
+          '<span class="stat-label">' + s.label + '</span>' +
+        '</div>';
+    }).join('');
+  }
+
+  // About paragraphs
+  var aboutP = document.getElementById('about-paragraphs');
+  if (aboutP) {
+    aboutP.innerHTML = d.profile.about.map(function (t) { return '<p>' + t + '</p>'; }).join('');
+  }
+
+  // About facts
+  var factsUl = document.getElementById('about-facts');
+  if (factsUl) {
+    factsUl.innerHTML = d.profile.facts.map(function (f) {
+      return '<li><span>' + f.label + '</span>' + f.value + '</li>';
+    }).join('');
+  }
+
+  // Trait grid
+  var traitGrid = document.getElementById('trait-grid');
+  if (traitGrid) {
+    traitGrid.innerHTML = d.profile.traits.map(function (t) {
+      return '<div class="trait-chip">' + t + '</div>';
+    }).join('');
+  }
+
+  // Anime grid
+  var animeGrid = document.getElementById('anime-grid');
+  if (animeGrid) {
+    animeGrid.innerHTML = d.anime.map(function (a, i) {
+      return '<article class="anime-card reveal">' +
+        '<div class="card-num">' + String(i + 1).padStart(2, '0') + '</div>' +
+        '<h3>' + a.title + '</h3>' +
+        '<p>' + a.comment + '</p>' +
+        '<div class="card-tags">' + a.tags.map(function (t) { return '<span>' + t + '</span>'; }).join('') + '</div>' +
+      '</article>';
+    }).join('');
+  }
+
+  // Movies grid
+  var moviesGrid = document.getElementById('movies-grid');
+  if (moviesGrid) {
+    moviesGrid.innerHTML = d.movies.map(function (m, i) {
+      return '<article class="anime-card reveal">' +
+        '<div class="card-num">' + String(i + 1).padStart(2, '0') + '</div>' +
+        '<h3>' + m.title + '</h3>' +
+        '<p>' + m.comment + '</p>' +
+        '<div class="card-tags">' + m.tags.map(function (t) { return '<span>' + t + '</span>'; }).join('') + '</div>' +
+      '</article>';
+    }).join('');
+  }
+
+  // Contact
+  var contactMsg = document.getElementById('contact-message');
+  var contactSocial = document.getElementById('contact-social');
+  if (contactMsg) contactMsg.textContent = d.contact.message;
+  if (contactSocial) {
+    contactSocial.innerHTML = d.social.map(function (s) {
+      return '<a href="' + s.url + '" target="_blank" rel="noopener" aria-label="' + s.name + '">' +
+        (s.icon ? '<span class="social-icon">' + s.icon + '</span>' : '') +
+        '<span>' + s.name + '</span></a>';
+    }).join('');
+  }
+})();
+
+// ── Sparkle canvas ───────────────────────────────────────
+(function initSparkles() {
+  var canvas = document.getElementById('sparkle-canvas');
   if (!canvas) return;
-  const ctx = canvas.getContext('2d');
+  var ctx = canvas.getContext('2d');
 
   function resize() {
-    canvas.width  = window.innerWidth;
+    canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
   }
   resize();
   window.addEventListener('resize', resize, { passive: true });
 
-  const NEONS = ['#00d4ff', '#ff0080', '#9b30ff', '#00ff88', '#ffe600'];
-  const COUNT = window.innerWidth < 600 ? 60 : 130;
+  var COLORS = ['#FF6B9D', '#7EC8E3', '#FFD700', '#FFB6C8', '#B8E4F0'];
+  var COUNT = window.innerWidth < 600 ? 25 : 50;
 
-  class Particle {
-    constructor() { this.reset(true); }
-    reset(init = false) {
-      this.x  = Math.random() * canvas.width;
-      this.y  = init ? Math.random() * canvas.height : canvas.height + 10;
-      this.vy = -(0.3 + Math.random() * 0.8);
-      this.vx = (Math.random() - 0.5) * 0.3;
-      this.r  = 0.5 + Math.random() * 1.5;
-      this.col = NEONS[Math.floor(Math.random() * NEONS.length)];
-      this.alpha = 0.2 + Math.random() * 0.5;
-      this.life  = 1;
-      this.decay = 0.0008 + Math.random() * 0.001;
-    }
-    update() {
-      this.x += this.vx;
-      this.y += this.vy;
-      this.life -= this.decay;
-      if (this.life <= 0 || this.y < -10) this.reset();
-    }
-    draw() {
-      ctx.save();
-      ctx.globalAlpha = this.alpha * this.life;
-      ctx.fillStyle   = this.col;
-      ctx.shadowBlur  = 10;
-      ctx.shadowColor = this.col;
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.restore();
-    }
-  }
+  function Sparkle() { this.reset(true); }
+  Sparkle.prototype.reset = function (init) {
+    this.x = Math.random() * canvas.width;
+    this.y = init ? Math.random() * canvas.height : -10;
+    this.vy = 0.2 + Math.random() * 0.5;
+    this.vx = (Math.random() - 0.5) * 0.3;
+    this.size = 1 + Math.random() * 3;
+    this.col = COLORS[Math.floor(Math.random() * COLORS.length)];
+    this.alpha = 0.3 + Math.random() * 0.5;
+    this.pulse = Math.random() * Math.PI * 2;
+    this.pulseSpeed = 0.02 + Math.random() * 0.03;
+  };
+  Sparkle.prototype.update = function () {
+    this.y += this.vy;
+    this.x += this.vx;
+    this.pulse += this.pulseSpeed;
+    if (this.y > canvas.height + 10) this.reset(false);
+  };
+  Sparkle.prototype.draw = function () {
+    var a = this.alpha * (0.5 + 0.5 * Math.sin(this.pulse));
+    ctx.save();
+    ctx.globalAlpha = a;
+    ctx.fillStyle = this.col;
+    ctx.shadowBlur = 8;
+    ctx.shadowColor = this.col;
 
-  const particles = Array.from({ length: COUNT }, () => new Particle());
+    // draw a 4-point star
+    var s = this.size;
+    ctx.beginPath();
+    ctx.moveTo(this.x, this.y - s * 1.5);
+    ctx.lineTo(this.x + s * 0.4, this.y - s * 0.4);
+    ctx.lineTo(this.x + s * 1.5, this.y);
+    ctx.lineTo(this.x + s * 0.4, this.y + s * 0.4);
+    ctx.lineTo(this.x, this.y + s * 1.5);
+    ctx.lineTo(this.x - s * 0.4, this.y + s * 0.4);
+    ctx.lineTo(this.x - s * 1.5, this.y);
+    ctx.lineTo(this.x - s * 0.4, this.y - s * 0.4);
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+  };
 
-  // Connection lines
-  function drawConnections() {
-    for (let i = 0; i < particles.length; i++) {
-      for (let j = i + 1; j < particles.length; j++) {
-        const dx = particles[i].x - particles[j].x;
-        const dy = particles[i].y - particles[j].y;
-        const d2 = dx * dx + dy * dy;
-        if (d2 < 6400) { // 80px
-          const alpha = (1 - d2 / 6400) * 0.12;
-          ctx.save();
-          ctx.globalAlpha = alpha;
-          ctx.strokeStyle = particles[i].col;
-          ctx.lineWidth   = 0.5;
-          ctx.shadowBlur  = 4;
-          ctx.shadowColor = particles[i].col;
-          ctx.beginPath();
-          ctx.moveTo(particles[i].x, particles[i].y);
-          ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.stroke();
-          ctx.restore();
-        }
-      }
-    }
-  }
-
-  // Mouse interaction
-  let mouse = { x: -9999, y: -9999 };
-  document.addEventListener('mousemove', e => {
-    mouse.x = e.clientX;
-    mouse.y = e.clientY;
-  }, { passive: true });
-
-  function applyMouseRepel() {
-    particles.forEach(p => {
-      const dx = p.x - mouse.x;
-      const dy = p.y - mouse.y;
-      const d  = Math.sqrt(dx * dx + dy * dy);
-      if (d < 80 && d > 0) {
-        const force = (80 - d) / 80 * 0.8;
-        p.vx += (dx / d) * force;
-        p.vy += (dy / d) * force;
-        // Dampen
-        p.vx *= 0.95;
-        p.vy *= 0.95;
-      }
-    });
-  }
+  var sparkles = [];
+  for (var i = 0; i < COUNT; i++) sparkles.push(new Sparkle());
 
   function loop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    applyMouseRepel();
-    drawConnections();
-    particles.forEach(p => { p.update(); p.draw(); });
+    for (var j = 0; j < sparkles.length; j++) {
+      sparkles[j].update();
+      sparkles[j].draw();
+    }
     requestAnimationFrame(loop);
   }
   loop();
 })();
 
-// ── Scroll reveal ─────────────────────────────────────────
-const revealEls = document.querySelectorAll('.reveal');
-const revealObserver = new IntersectionObserver(
-  entries => {
-    entries.forEach(entry => {
+// ── Scroll reveal ────────────────────────────────────────
+var revealEls = document.querySelectorAll('.reveal');
+var revealObserver = new IntersectionObserver(
+  function (entries) {
+    entries.forEach(function (entry) {
       if (entry.isIntersecting) {
-        const siblings = [...entry.target.parentElement.querySelectorAll('.reveal')];
-        const delay = siblings.indexOf(entry.target) * 80;
-        setTimeout(() => entry.target.classList.add('visible'), delay);
+        var siblings = Array.from(entry.target.parentElement.querySelectorAll('.reveal'));
+        var delay = siblings.indexOf(entry.target) * 80;
+        setTimeout(function () { entry.target.classList.add('visible'); }, delay);
         revealObserver.unobserve(entry.target);
       }
     });
   },
   { threshold: 0.1, rootMargin: '0px 0px -30px 0px' }
 );
-revealEls.forEach(el => revealObserver.observe(el));
+revealEls.forEach(function (el) { revealObserver.observe(el); });
 
-// ── Power level bar ───────────────────────────────────────
-const plFill = document.querySelector('.pl-fill');
-if (plFill) {
-  const plObserver = new IntersectionObserver(entries => {
-    if (entries[0].isIntersecting) {
-      setTimeout(() => plFill.classList.add('animated'), 300);
-      plObserver.disconnect();
-    }
-  }, { threshold: 0.5 });
-  plObserver.observe(plFill);
-}
+// ── Scroll-triggered header ──────────────────────────────
+var header = document.getElementById('site-header');
+window.addEventListener('scroll', function () {
+  header.classList.toggle('scrolled', window.scrollY > 60);
+}, { passive: true });
 
-// ── Skill bar animation ────────────────────────────────────
-const skillFills = document.querySelectorAll('.skill-bar-fill');
-const skillObserver = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      setTimeout(() => e.target.classList.add('animated'), 200);
-      skillObserver.unobserve(e.target);
-    }
-  });
-}, { threshold: 0.3 });
-skillFills.forEach(el => skillObserver.observe(el));
-
-// ── Counter animation (hero stats) ────────────────────────
-function animateCount(el, target, duration = 1400) {
-  const start = performance.now();
+// ── Counter animation ────────────────────────────────────
+function animateCount(el, target, duration) {
+  duration = duration || 1400;
+  var start = performance.now();
   function step(now) {
-    const t   = Math.min((now - start) / duration, 1);
-    const val = Math.round(t * t * (3 - 2 * t) * target); // smoothstep
+    var t = Math.min((now - start) / duration, 1);
+    var val = Math.round(t * t * (3 - 2 * t) * target);
     el.textContent = val;
     if (t < 1) requestAnimationFrame(step);
     else el.textContent = target;
@@ -167,109 +201,50 @@ function animateCount(el, target, duration = 1400) {
   requestAnimationFrame(step);
 }
 
-const counterEls = document.querySelectorAll('.stat-num[data-count]');
-const counterObserver = new IntersectionObserver(entries => {
-  entries.forEach(e => {
+var counterEls = document.querySelectorAll('.stat-num[data-count]');
+var counterObserver = new IntersectionObserver(function (entries) {
+  entries.forEach(function (e) {
     if (e.isIntersecting) {
       animateCount(e.target, parseInt(e.target.dataset.count, 10));
       counterObserver.unobserve(e.target);
     }
   });
 }, { threshold: 0.5 });
-counterEls.forEach(el => counterObserver.observe(el));
+counterEls.forEach(function (el) { counterObserver.observe(el); });
 
-// ── Click burst effect ────────────────────────────────────
-const BURST_CHARS = ['⚡', '✦', '★', '▲', '◆', '×'];
-const BURST_COLS  = ['#00d4ff', '#ff0080', '#9b30ff', '#00ff88', '#ffe600'];
+// ── Click sparkle burst ──────────────────────────────────
+var BURST_CHARS = ['+', '*', '.'];
+var BURST_COLS = ['#FF6B9D', '#7EC8E3', '#FFD700', '#FFB6C8'];
 
-document.addEventListener('click', e => {
-  for (let i = 0; i < 8; i++) {
-    const el    = document.createElement('span');
-    const char  = BURST_CHARS[Math.floor(Math.random() * BURST_CHARS.length)];
-    const col   = BURST_COLS [Math.floor(Math.random() * BURST_COLS.length)];
-    const angle = (Math.PI * 2 / 8) * i;
-    const dist  = 50 + Math.random() * 40;
+document.addEventListener('click', function (e) {
+  for (var i = 0; i < 6; i++) {
+    var el = document.createElement('span');
+    var char = BURST_CHARS[Math.floor(Math.random() * BURST_CHARS.length)];
+    var col = BURST_COLS[Math.floor(Math.random() * BURST_COLS.length)];
+    var angle = (Math.PI * 2 / 6) * i;
+    var dist = 30 + Math.random() * 30;
 
     el.textContent = char;
-    el.style.cssText = `
-      position: fixed;
-      left: ${e.clientX}px;
-      top:  ${e.clientY}px;
-      color: ${col};
-      font-size: ${12 + Math.random() * 10}px;
-      pointer-events: none;
-      z-index: 9999;
-      text-shadow: 0 0 8px ${col};
-      animation: burstFly 0.6s ease-out forwards;
-      --dx: ${Math.cos(angle) * dist}px;
-      --dy: ${Math.sin(angle) * dist}px;
-    `;
+    el.style.cssText =
+      'position:fixed;left:' + e.clientX + 'px;top:' + e.clientY + 'px;' +
+      'color:' + col + ';font-size:' + (14 + Math.random() * 8) + 'px;' +
+      'font-weight:900;pointer-events:none;z-index:9999;' +
+      'animation:sparkBurst 0.5s ease-out forwards;' +
+      '--dx:' + (Math.cos(angle) * dist) + 'px;' +
+      '--dy:' + (Math.sin(angle) * dist) + 'px;';
     document.body.appendChild(el);
-    setTimeout(() => el.remove(), 650);
+    setTimeout(function () { el.remove(); }, 550);
   }
 });
 
-// inject burst keyframes once
-if (!document.getElementById('burst-kf')) {
-  const s = document.createElement('style');
-  s.id = 'burst-kf';
-  s.textContent = `
-    @keyframes burstFly {
-      0%   { transform: translate(-50%,-50%) scale(1.2); opacity: 1; }
-      100% { transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(0.2); opacity: 0; }
-    }
-  `;
+// inject burst keyframes
+if (!document.getElementById('spark-kf')) {
+  var s = document.createElement('style');
+  s.id = 'spark-kf';
+  s.textContent =
+    '@keyframes sparkBurst {' +
+    '0% { transform: translate(-50%,-50%) scale(1.3); opacity: 1; }' +
+    '100% { transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(0); opacity: 0; }' +
+    '}';
   document.head.appendChild(s);
-}
-
-// ── Neon flicker on title (random, subtle) ─────────────────
-const heroTitle = document.querySelector('.glitch');
-if (heroTitle) {
-  setInterval(() => {
-    if (Math.random() < 0.15) {
-      heroTitle.style.opacity = '0.85';
-      setTimeout(() => { heroTitle.style.opacity = ''; }, 60);
-    }
-  }, 800);
-}
-
-// ── Power-up effect on card hover ─────────────────────────
-document.querySelectorAll('.work-card').forEach(card => {
-  card.addEventListener('mouseenter', () => {
-    card.style.transition = 'border-color 0.1s, box-shadow 0.1s, transform 0.2s';
-    card.style.transform = 'translateY(-4px)';
-  });
-  card.addEventListener('mouseleave', () => {
-    card.style.transform = '';
-  });
-});
-
-// ── CRT flicker (very subtle, rare) ──────────────────────
-setInterval(() => {
-  if (Math.random() < 0.04) {
-    document.body.style.filter = 'brightness(0.94)';
-    setTimeout(() => { document.body.style.filter = ''; }, 50);
-    setTimeout(() => {
-      document.body.style.filter = 'brightness(1.04)';
-      setTimeout(() => { document.body.style.filter = ''; }, 30);
-    }, 80);
-  }
-}, 3000);
-
-// ── Typing effect re-trigger on visible ──────────────────
-const typeEl = document.querySelector('.typing-effect');
-if (typeEl) {
-  const text = typeEl.textContent.replace('█', '');
-  typeEl.textContent = '';
-  const termObserver = new IntersectionObserver(entries => {
-    if (entries[0].isIntersecting) {
-      let i = 0;
-      const tick = setInterval(() => {
-        typeEl.textContent = text.slice(0, ++i);
-        if (i >= text.length) clearInterval(tick);
-      }, 55);
-      termObserver.disconnect();
-    }
-  }, { threshold: 0.5 });
-  termObserver.observe(typeEl);
 }

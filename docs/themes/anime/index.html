@@ -6,375 +6,126 @@
   <title>iKnoWay — Portfolio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;900&family=Noto+Sans+JP:wght@400;700;900&family=Zen+Maru+Gothic:wght@400;700;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <!-- ── Canvas: particle field ── -->
-  <canvas id="particle-canvas" aria-hidden="true"></canvas>
-
-  <!-- ── Scanlines overlay ── -->
-  <div class="scanlines" aria-hidden="true"></div>
+  <!-- ── Sparkle canvas ── -->
+  <canvas id="sparkle-canvas" aria-hidden="true"></canvas>
 
   <!-- ── Navigation ── -->
   <header class="site-header" id="site-header">
     <nav class="nav-inner">
-      <span class="nav-logo">
-        <span class="logo-bracket">[</span>
-        iK
-        <span class="logo-bracket">]</span>
-      </span>
+      <span class="nav-logo">iKnoWay</span>
       <ul class="nav-links">
-        <li><a href="#about">PROFILE</a></li>
-        <li><a href="#works">WORKS</a></li>
-        <li><a href="#skills">SKILLS</a></li>
-        <li><a href="#contact">CONTACT</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#anime">Anime</a></li>
+        <li><a href="#movies">Movies</a></li>
+        <li><a href="#contact">Contact</a></li>
       </ul>
-      <a href="../../index.html?switch=1" class="nav-switch">⟳ GACHA</a>
+      <a href="../../index.html?switch=1" class="nav-switch">GACHA</a>
     </nav>
   </header>
 
   <!-- ── Hero ── -->
   <section class="hero" id="top">
-    <!-- speed lines background -->
-    <div class="speed-lines" aria-hidden="true"></div>
-
-    <!-- decorative kanji -->
-    <div class="deco-kanji" aria-hidden="true">
-      <span class="kanji k1">力</span>
-      <span class="kanji k2">技</span>
-      <span class="kanji k3">創</span>
-      <span class="kanji k4">道</span>
-      <span class="kanji k5">術</span>
+    <div class="hero-deco" aria-hidden="true">
+      <span class="deco-star s1">+</span>
+      <span class="deco-star s2">+</span>
+      <span class="deco-star s3">+</span>
+      <span class="deco-star s4">+</span>
+      <span class="deco-star s5">+</span>
     </div>
-
     <div class="hero-inner">
-      <div class="hero-overline">
-        <span class="overline-dash"></span>
-        <span>FRONTEND DEVELOPER &amp; DESIGNER</span>
-        <span class="overline-dash"></span>
-      </div>
-
-      <!-- Glitch title -->
-      <h1 class="hero-title glitch-wrap">
-        <span class="glitch" data-text="iKnoWay">iKnoWay</span>
-      </h1>
-
-      <p class="hero-sub">
-        <span class="sub-jp">デジタルの世界に命を吹き込む</span><br>
-        <span class="sub-en">Breathing life into the digital world.</span>
-      </p>
-
-      <div class="hero-stats">
-        <div class="stat">
-          <span class="stat-num" data-count="5">0</span><span class="stat-unit">+</span>
-          <span class="stat-label">YEARS</span>
-        </div>
-        <div class="stat-divider"></div>
-        <div class="stat">
-          <span class="stat-num" data-count="40">0</span><span class="stat-unit">+</span>
-          <span class="stat-label">PROJECTS</span>
-        </div>
-        <div class="stat-divider"></div>
-        <div class="stat">
-          <span class="stat-num" data-count="100">0</span><span class="stat-unit">%</span>
-          <span class="stat-label">PASSION</span>
-        </div>
-      </div>
-
-      <div class="hero-btns">
-        <a href="#works" class="btn-neon">ENTER PORTFOLIO</a>
-        <a href="#contact" class="btn-ghost">CONTACT</a>
-      </div>
-    </div>
-
-    <!-- power aura -->
-    <div class="power-aura" aria-hidden="true">
-      <div class="aura-ring r1"></div>
-      <div class="aura-ring r2"></div>
-      <div class="aura-ring r3"></div>
-      <div class="aura-ring r4"></div>
-      <div class="aura-core">
-        <span class="aura-icon">⚡</span>
-      </div>
+      <div class="hero-badge">PROFILE CARD</div>
+      <h1 class="hero-name" id="hero-name"></h1>
+      <p class="hero-role" id="hero-role"></p>
+      <p class="hero-tagline" id="hero-tagline"></p>
+      <div class="hero-stats" id="hero-stats"></div>
+      <a href="#anime" class="btn-primary">My Favorites</a>
     </div>
   </section>
 
   <!-- ── About ── -->
   <section class="section" id="about">
     <div class="container">
-      <div class="section-header reveal">
-        <span class="section-tag">// 01</span>
-        <h2 class="section-title">PROFILE<span class="title-jp">プロフィール</span></h2>
-        <div class="header-line"></div>
+      <div class="section-label reveal">
+        <span class="label-num">01</span>
+        <span class="label-text">About</span>
       </div>
-      <div class="about-grid">
-        <div class="profile-card reveal">
-          <div class="profile-id">
-            <div class="id-photo">
-              <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                  <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%"   stop-color="#00d4ff" stop-opacity="0.8"/>
-                    <stop offset="100%" stop-color="#9b30ff" stop-opacity="0.8"/>
-                  </linearGradient>
-                </defs>
-                <circle cx="50" cy="36" r="22" fill="url(#g1)" opacity="0.7"/>
-                <ellipse cx="50" cy="82" rx="30" ry="20" fill="url(#g1)" opacity="0.5"/>
-                <circle cx="42" cy="33" r="4" fill="#fff" opacity="0.9"/>
-                <circle cx="58" cy="33" r="4" fill="#fff" opacity="0.9"/>
-                <circle cx="43" cy="34" r="2" fill="#00d4ff"/>
-                <circle cx="59" cy="34" r="2" fill="#00d4ff"/>
-                <path d="M 43 43 Q 50 48 57 43" stroke="#00d4ff" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-              </svg>
-            </div>
-            <div class="id-data">
-              <div class="id-row"><span>NAME</span><strong>iKnoWay</strong></div>
-              <div class="id-row"><span>CLASS</span><strong>Developer S+</strong></div>
-              <div class="id-row"><span>BASE</span><strong>Tokyo, Japan</strong></div>
-              <div class="id-row"><span>EXP</span><strong>5+ Years</strong></div>
-            </div>
-          </div>
-          <div class="power-level-bar">
-            <span class="pl-label">POWER LEVEL</span>
-            <div class="pl-track">
-              <div class="pl-fill"></div>
-              <span class="pl-num">9999</span>
-            </div>
-          </div>
+      <div class="about-card reveal">
+        <div class="about-avatar">
+          <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="ag" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#FF6B9D"/>
+                <stop offset="100%" stop-color="#7EC8E3"/>
+              </linearGradient>
+            </defs>
+            <circle cx="60" cy="45" r="28" fill="url(#ag)" opacity="0.7"/>
+            <ellipse cx="60" cy="100" rx="38" ry="24" fill="url(#ag)" opacity="0.5"/>
+            <circle cx="50" cy="42" r="5" fill="#fff" opacity="0.9"/>
+            <circle cx="70" cy="42" r="5" fill="#fff" opacity="0.9"/>
+            <circle cx="52" cy="43" r="2.5" fill="#2D3436"/>
+            <circle cx="72" cy="43" r="2.5" fill="#2D3436"/>
+            <circle cx="56" cy="40" r="1.5" fill="#fff"/>
+            <circle cx="76" cy="40" r="1.5" fill="#fff"/>
+            <path d="M 54 53 Q 60 58 66 53" stroke="#FF6B9D" stroke-width="2" fill="none" stroke-linecap="round"/>
+          </svg>
         </div>
-
-        <div class="about-panels reveal">
-          <div class="panel">
-            <h3 class="panel-title">「 ABOUT 」</h3>
-            <p>東京で活動するフロントエンド開発者＆デザイナー。<br>コードで世界を変えることを信念に、日々限界を突破し続けている。</p>
-            <p>美しさと機能を両立させたインターフェースこそが、最強のUIだと確信している。</p>
-          </div>
-          <div class="trait-grid">
-            <div class="trait-chip">⚔️ React / Next.js</div>
-            <div class="trait-chip">🔮 TypeScript</div>
-            <div class="trait-chip">⚡ Performance</div>
-            <div class="trait-chip">🎨 UI / UX</div>
-            <div class="trait-chip">🌀 Animation</div>
-            <div class="trait-chip">🗡️ Figma</div>
-          </div>
+        <div class="about-info">
+          <div id="about-paragraphs"></div>
+          <ul class="about-facts" id="about-facts"></ul>
         </div>
+        <div class="about-traits" id="trait-grid"></div>
       </div>
     </div>
   </section>
 
-  <!-- ── Works ── -->
-  <section class="section section-dark" id="works">
+  <!-- ── Anime ── -->
+  <section class="section section-alt" id="anime">
     <div class="container">
-      <div class="section-header reveal">
-        <span class="section-tag">// 02</span>
-        <h2 class="section-title">WORKS<span class="title-jp">作品一覧</span></h2>
-        <div class="header-line"></div>
+      <div class="section-label reveal">
+        <span class="label-num">02</span>
+        <span class="label-text">Anime</span>
       </div>
-      <div class="works-grid">
-        <article class="work-card reveal">
-          <div class="card-slash"></div>
-          <div class="card-inner">
-            <div class="card-num">01</div>
-            <h3>Minimal Dashboard</h3>
-            <p>データ可視化ダッシュボード。React + D3.js で構築した高速インタラクティブグラフ。</p>
-            <div class="card-tags">
-              <span>React</span><span>D3.js</span><span>TypeScript</span>
-            </div>
-            <a href="#" class="card-link">
-              <span class="link-arrow">▶</span> VIEW PROJECT
-            </a>
-          </div>
-          <div class="card-glow"></div>
-        </article>
-        <article class="work-card reveal">
-          <div class="card-slash"></div>
-          <div class="card-inner">
-            <div class="card-num">02</div>
-            <h3>EC Site Redesign</h3>
-            <p>アパレルブランドのECサイトを完全リデザイン。UXリサーチからシステム構築まで。</p>
-            <div class="card-tags">
-              <span>Figma</span><span>Next.js</span><span>Tailwind</span>
-            </div>
-            <a href="#" class="card-link">
-              <span class="link-arrow">▶</span> VIEW PROJECT
-            </a>
-          </div>
-          <div class="card-glow"></div>
-        </article>
-        <article class="work-card reveal">
-          <div class="card-slash"></div>
-          <div class="card-inner">
-            <div class="card-num">03</div>
-            <h3>Brand Identity</h3>
-            <p>スタートアップのブランド戦略・アイデンティティ全設計。ロゴからWebまで一気通貫。</p>
-            <div class="card-tags">
-              <span>Branding</span><span>Illustrator</span><span>HTML/CSS</span>
-            </div>
-            <a href="#" class="card-link">
-              <span class="link-arrow">▶</span> VIEW PROJECT
-            </a>
-          </div>
-          <div class="card-glow"></div>
-        </article>
-        <article class="work-card reveal secret">
-          <div class="card-slash"></div>
-          <div class="card-inner">
-            <div class="card-num classified">??</div>
-            <h3>SECRET PROJECT</h3>
-            <p>現在開発中の極秘ミッション。完成まで情報は開示できない。乞うご期待。</p>
-            <div class="card-tags">
-              <span>???</span><span>CLASSIFIED</span>
-            </div>
-            <span class="card-link locked">
-              <span class="link-arrow">🔒</span> CLASSIFIED
-            </span>
-          </div>
-          <div class="card-glow red"></div>
-        </article>
-      </div>
+      <div class="card-grid" id="anime-grid"></div>
     </div>
   </section>
 
-  <!-- ── Skills ── -->
-  <section class="section" id="skills">
+  <!-- ── Movies ── -->
+  <section class="section" id="movies">
     <div class="container">
-      <div class="section-header reveal">
-        <span class="section-tag">// 03</span>
-        <h2 class="section-title">SKILLS<span class="title-jp">能力値</span></h2>
-        <div class="header-line"></div>
+      <div class="section-label reveal">
+        <span class="label-num">03</span>
+        <span class="label-text">Movies</span>
       </div>
-      <div class="skills-layout">
-        <div class="skill-bars-col reveal">
-          <div class="skill-item">
-            <div class="skill-meta">
-              <span class="skill-name">HTML / CSS</span>
-              <span class="skill-rank s">S</span>
-            </div>
-            <div class="skill-bar-track">
-              <div class="skill-bar-fill" style="--pct:98%; --col:#00d4ff;"></div>
-              <span class="skill-pct">98</span>
-            </div>
-          </div>
-          <div class="skill-item">
-            <div class="skill-meta">
-              <span class="skill-name">JavaScript</span>
-              <span class="skill-rank a">A+</span>
-            </div>
-            <div class="skill-bar-track">
-              <div class="skill-bar-fill" style="--pct:92%; --col:#9b30ff;"></div>
-              <span class="skill-pct">92</span>
-            </div>
-          </div>
-          <div class="skill-item">
-            <div class="skill-meta">
-              <span class="skill-name">React / Next.js</span>
-              <span class="skill-rank a">A</span>
-            </div>
-            <div class="skill-bar-track">
-              <div class="skill-bar-fill" style="--pct:88%; --col:#ff0080;"></div>
-              <span class="skill-pct">88</span>
-            </div>
-          </div>
-          <div class="skill-item">
-            <div class="skill-meta">
-              <span class="skill-name">TypeScript</span>
-              <span class="skill-rank a">A</span>
-            </div>
-            <div class="skill-bar-track">
-              <div class="skill-bar-fill" style="--pct:82%; --col:#ffe600;"></div>
-              <span class="skill-pct">82</span>
-            </div>
-          </div>
-          <div class="skill-item">
-            <div class="skill-meta">
-              <span class="skill-name">UI / UX Design</span>
-              <span class="skill-rank s">S</span>
-            </div>
-            <div class="skill-bar-track">
-              <div class="skill-bar-fill" style="--pct:95%; --col:#00ff88;"></div>
-              <span class="skill-pct">95</span>
-            </div>
-          </div>
-          <div class="skill-item">
-            <div class="skill-meta">
-              <span class="skill-name">Animation</span>
-              <span class="skill-rank a">A+</span>
-            </div>
-            <div class="skill-bar-track">
-              <div class="skill-bar-fill" style="--pct:90%; --col:#00d4ff;"></div>
-              <span class="skill-pct">90</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="skill-tech-col reveal">
-          <h3 class="tech-heading">// TECH STACK</h3>
-          <div class="tech-grid">
-            <div class="tech-item">Vue.js</div>
-            <div class="tech-item">Node.js</div>
-            <div class="tech-item">GraphQL</div>
-            <div class="tech-item">GSAP</div>
-            <div class="tech-item">Framer Motion</div>
-            <div class="tech-item">Vite</div>
-            <div class="tech-item">Astro</div>
-            <div class="tech-item">Tailwind</div>
-            <div class="tech-item">Storybook</div>
-            <div class="tech-item">Git</div>
-            <div class="tech-item">Docker</div>
-            <div class="tech-item">Figma</div>
-          </div>
-        </div>
-      </div>
+      <div class="card-grid" id="movies-grid"></div>
     </div>
   </section>
 
   <!-- ── Contact ── -->
-  <section class="section section-dark" id="contact">
-    <div class="container">
-      <div class="section-header reveal">
-        <span class="section-tag">// 04</span>
-        <h2 class="section-title">CONTACT<span class="title-jp">連絡先</span></h2>
-        <div class="header-line"></div>
+  <section class="section section-alt" id="contact">
+    <div class="container contact-wrap">
+      <div class="section-label reveal">
+        <span class="label-num">04</span>
+        <span class="label-text">Contact</span>
       </div>
-      <div class="contact-terminal reveal">
-        <div class="terminal-bar">
-          <span class="tb-dot red"></span>
-          <span class="tb-dot yellow"></span>
-          <span class="tb-dot green"></span>
-          <span class="tb-title">contact.sh</span>
-        </div>
-        <div class="terminal-body">
-          <p class="term-line">
-            <span class="term-prompt">$</span>
-            <span class="term-cmd typing-effect">./contact --send-message</span>
-          </p>
-          <p class="term-output">&gt; 新しいプロジェクトや機会について、お気軽にどうぞ。</p>
-          <p class="term-output">&gt; 一緒に何か面白いものを作りましょう。</p>
-          <p class="term-output blank">&nbsp;</p>
-          <a href="mailto:hello@example.com" class="btn-neon terminal-btn">
-            ⚡ SEND MESSAGE
-          </a>
-          <div class="term-socials">
-            <a href="https://github.com/" target="_blank" rel="noopener">GitHub /</a>
-            <a href="https://twitter.com/" target="_blank" rel="noopener">Twitter /</a>
-            <a href="https://linkedin.com/" target="_blank" rel="noopener">LinkedIn</a>
-          </div>
-        </div>
+      <div class="speech-bubble reveal">
+        <p id="contact-message"></p>
+        <div class="social-links" id="contact-social"></div>
       </div>
     </div>
+    <footer class="site-footer">
+      <p>iKnoWay &copy; 2026</p>
+      <a href="../../index.html?switch=1" class="footer-switch">GACHA</a>
+    </footer>
   </section>
 
-  <!-- ── Footer ── -->
-  <footer class="site-footer">
-    <div class="footer-inner">
-      <p><span class="footer-bracket">[</span> iKnoWay &copy; 2026 <span class="footer-bracket">]</span> — ALL SYSTEMS OPERATIONAL</p>
-      <a href="../../index.html?switch=1" class="footer-switch">⟳ THEME GACHA</a>
-    </div>
-  </footer>
-
   <script src="../../shared/utils.js"></script>
+  <script src="../../shared/data.js"></script>
+  <script src="../../shared/snap.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
