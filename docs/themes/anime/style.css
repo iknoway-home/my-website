@@ -3,6 +3,16 @@
    Manga-inspired: sakura pink, sky blue, sparkles, panels
    ============================================================ */
 
+/* ── View Transitions ─────────────────────────────────────── */
+@view-transition { navigation: auto; }
+::view-transition-old(root) { animation: 350ms cubic-bezier(.4,0,1,1)  both vt-out; }
+::view-transition-new(root) { animation: 400ms cubic-bezier(0,0,.2,1)  both vt-in; }
+@keyframes vt-out { to   { opacity: 0; transform: scale(0.98); } }
+@keyframes vt-in  { from { opacity: 0; transform: scale(1.01); } }
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
+}
+
 :root {
   --pink:       #FF6B9D;
   --pink-light: #FFB6C8;
@@ -70,6 +80,22 @@ ul { list-style: none; }
 .reveal.visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* Progressive enhancement: CSS Scroll-Driven Animations */
+@supports (animation-timeline: view()) {
+  .reveal {
+    animation: revealSlideUp linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 30%;
+  }
+  @keyframes revealSlideUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { animation: none; opacity: 1; transform: none; }
+  }
 }
 
 /* ── Navigation ──────────────────────────────────────────── */
@@ -213,13 +239,23 @@ ul { list-style: none; }
 .hero-name {
   font-family: var(--font-head);
   font-weight: 900;
-  font-size: clamp(3rem, 10vw, 6rem);
+  font-size: clamp(3.5rem, 12vw, 9rem);
+  letter-spacing: -0.03em;
   background: linear-gradient(135deg, var(--pink), var(--blue));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   line-height: 1.1;
   margin-bottom: 12px;
+}
+
+/* SplitText char wrappers must inherit gradient for correct rendering */
+.hero-name .char {
+  display: inline;
+  background: inherit;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .hero-role {
@@ -422,8 +458,20 @@ ul { list-style: none; }
 /* ── Card grid (anime / movies) ──────────────────────────── */
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 20px;
+}
+
+.bento-wide { grid-column: span 2; }
+
+@media (max-width: 1024px) {
+  .card-grid { grid-template-columns: repeat(2, 1fr); }
+  .bento-wide { grid-column: span 2; }
+}
+
+@media (max-width: 640px) {
+  .card-grid { grid-template-columns: 1fr; }
+  .bento-wide { grid-column: span 1; }
 }
 
 .anime-card {
@@ -680,6 +728,4 @@ ul { list-style: none; }
 
   .hero-stats { gap: 16px; }
   .stat-num { font-size: 1.5rem; }
-
-  .card-grid { grid-template-columns: 1fr; }
 }

@@ -79,11 +79,6 @@ function resolveTheme() {
 
 // ── Entry point ──────────────────────────────────────────
 (function () {
-  const theme  = resolveTheme();
-  const loader = document.getElementById('loader');
-
-  setTimeout(() => {
-    if (loader) loader.classList.add('fade-out');
-    setTimeout(() => window.location.replace(theme.path), 400);
-  }, 280);
+  const theme = resolveTheme();
+  setTimeout(() => window.location.replace(theme.path), 300);
 })();
