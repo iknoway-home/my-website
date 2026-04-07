@@ -32,6 +32,16 @@
     }
     @keyframes spin { to { transform: rotate(360deg); } }
     p { font-size: 14px; letter-spacing: 0.1em; color: rgba(255,255,255,0.5); }
+
+    /* View Transitions — cross-document */
+    @view-transition { navigation: auto; }
+    ::view-transition-old(root) { animation: 300ms ease-out both vt-fade-out; }
+    ::view-transition-new(root) { animation: 400ms ease-in  both vt-fade-in; }
+    @keyframes vt-fade-out { to   { opacity: 0; } }
+    @keyframes vt-fade-in  { from { opacity: 0; } }
+    @media (prefers-reduced-motion: reduce) {
+      ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
+    }
   </style>
 </head>
 <body>

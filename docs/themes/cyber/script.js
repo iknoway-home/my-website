@@ -5,6 +5,13 @@
 
 'use strict';
 
+// ── Bento size helper ────────────────────────────────────
+function bentoClass(i, total) {
+  if (total === 9 && (i === 0 || i === 4 || i === 7)) return ' bento-wide';
+  if (total === 6 && (i === 0 || i === 3)) return ' bento-wide';
+  return '';
+}
+
 // ── Render shared data ───────────────────────────────────
 (function renderData() {
   const d = window.__data;
@@ -23,6 +30,16 @@
   const lines = d.profile.tagline.split('\n');
   if (heroTagJp) heroTagJp.textContent = lines[0] || '';
   if (heroTagEn) heroTagEn.textContent = lines[1] || '';
+
+  // GSAP — hero overline + sub (DO NOT SplitText glitch element)
+  requestAnimationFrame(function () {
+    if (!window.__utils.prefersReducedMotion() && window.gsap) {
+      const overline = document.querySelector('.hero-overline');
+      const heroSub  = document.querySelector('.hero-sub');
+      if (overline) gsap.from(overline, { opacity: 0, y: 20, duration: 0.7, ease: 'power2.out' });
+      if (heroSub)  gsap.from(heroSub,  { opacity: 0, y: 20, duration: 0.7, delay: 0.15, ease: 'power2.out' });
+    }
+  });
 
   // Hero stats
   const heroStats = document.getElementById('hero-stats');
@@ -65,7 +82,7 @@
   const animeGrid = document.getElementById('anime-grid');
   if (animeGrid) {
     animeGrid.innerHTML = d.anime.map((a, i) =>
-      '<article class="work-card reveal">' +
+      '<article class="work-card reveal' + bentoClass(i, d.anime.length) + '">' +
         '<div class="card-slash"></div>' +
         '<div class="card-inner">' +
           '<div class="card-num">' + String(i + 1).padStart(2, '0') + '</div>' +
@@ -82,7 +99,7 @@
   const moviesGrid = document.getElementById('movies-grid');
   if (moviesGrid) {
     moviesGrid.innerHTML = d.movies.map((m, i) =>
-      '<article class="work-card reveal">' +
+      '<article class="work-card reveal' + bentoClass(i, d.movies.length) + '">' +
         '<div class="card-slash"></div>' +
         '<div class="card-inner">' +
           '<div class="card-num">' + String(i + 1).padStart(2, '0') + '</div>' +
@@ -221,21 +238,24 @@
 })();
 
 // ── Scroll reveal ─────────────────────────────────────────
-const revealEls = document.querySelectorAll('.reveal');
-const revealObserver = new IntersectionObserver(
-  entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const siblings = [...entry.target.parentElement.querySelectorAll('.reveal')];
-        const delay = siblings.indexOf(entry.target) * 80;
-        setTimeout(() => entry.target.classList.add('visible'), delay);
-        revealObserver.unobserve(entry.target);
-      }
-    });
-  },
-  { threshold: 0.1, rootMargin: '0px 0px -30px 0px' }
-);
-revealEls.forEach(el => revealObserver.observe(el));
+// Fallback for browsers without CSS Scroll-Driven Animations (e.g. Safari)
+if (!CSS.supports('animation-timeline', 'view()')) {
+  const revealEls = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const siblings = [...entry.target.parentElement.querySelectorAll('.reveal')];
+          const delay = siblings.indexOf(entry.target) * 80;
+          setTimeout(() => entry.target.classList.add('visible'), delay);
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.1, rootMargin: '0px 0px -30px 0px' }
+  );
+  revealEls.forEach(el => revealObserver.observe(el));
+}
 
 // ── Power level bar ───────────────────────────────────────
 const plFill = document.querySelector('.pl-fill');

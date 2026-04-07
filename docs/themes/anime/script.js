@@ -5,6 +5,13 @@
 
 'use strict';
 
+// ── Bento size helper ────────────────────────────────────
+function bentoClass(i, total) {
+  if (total === 9 && (i === 0 || i === 4 || i === 7)) return ' bento-wide';
+  if (total === 6 && (i === 0 || i === 3)) return ' bento-wide';
+  return '';
+}
+
 // ── Render shared data ───────────────────────────────────
 (function renderData() {
   var d = window.__data;
@@ -17,6 +24,16 @@
   if (heroName) heroName.textContent = d.profile.name;
   if (heroRole) heroRole.textContent = d.profile.role;
   if (heroTagline) heroTagline.innerHTML = d.profile.tagline.replace(/\n/g, '<br>');
+
+  // GSAP SplitText — hero name
+  requestAnimationFrame(function () {
+    if (!window.__utils.prefersReducedMotion() && window.gsap && window.SplitText && heroName) {
+      var split = new SplitText(heroName, { type: 'chars' });
+      gsap.from(split.chars, {
+        opacity: 0, y: 30, duration: 0.6, stagger: 0.03, ease: 'power3.out',
+      });
+    }
+  });
 
   // Hero stats
   var heroStats = document.getElementById('hero-stats');
@@ -57,7 +74,7 @@
   var animeGrid = document.getElementById('anime-grid');
   if (animeGrid) {
     animeGrid.innerHTML = d.anime.map(function (a, i) {
-      return '<article class="anime-card reveal">' +
+      return '<article class="anime-card reveal' + bentoClass(i, d.anime.length) + '">' +
         '<div class="card-num">' + String(i + 1).padStart(2, '0') + '</div>' +
         '<h3>' + a.title + '</h3>' +
         '<p>' + a.comment + '</p>' +
@@ -70,7 +87,7 @@
   var moviesGrid = document.getElementById('movies-grid');
   if (moviesGrid) {
     moviesGrid.innerHTML = d.movies.map(function (m, i) {
-      return '<article class="anime-card reveal">' +
+      return '<article class="anime-card reveal' + bentoClass(i, d.movies.length) + '">' +
         '<div class="card-num">' + String(i + 1).padStart(2, '0') + '</div>' +
         '<h3>' + m.title + '</h3>' +
         '<p>' + m.comment + '</p>' +
@@ -165,21 +182,24 @@
 })();
 
 // ── Scroll reveal ────────────────────────────────────────
-var revealEls = document.querySelectorAll('.reveal');
-var revealObserver = new IntersectionObserver(
-  function (entries) {
-    entries.forEach(function (entry) {
-      if (entry.isIntersecting) {
-        var siblings = Array.from(entry.target.parentElement.querySelectorAll('.reveal'));
-        var delay = siblings.indexOf(entry.target) * 80;
-        setTimeout(function () { entry.target.classList.add('visible'); }, delay);
-        revealObserver.unobserve(entry.target);
-      }
-    });
-  },
-  { threshold: 0.1, rootMargin: '0px 0px -30px 0px' }
-);
-revealEls.forEach(function (el) { revealObserver.observe(el); });
+// Fallback for browsers without CSS Scroll-Driven Animations (e.g. Safari)
+if (!CSS.supports('animation-timeline', 'view()')) {
+  var revealEls = document.querySelectorAll('.reveal');
+  var revealObserver = new IntersectionObserver(
+    function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var siblings = Array.from(entry.target.parentElement.querySelectorAll('.reveal'));
+          var delay = siblings.indexOf(entry.target) * 80;
+          setTimeout(function () { entry.target.classList.add('visible'); }, delay);
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.1, rootMargin: '0px 0px -30px 0px' }
+  );
+  revealEls.forEach(function (el) { revealObserver.observe(el); });
+}
 
 // ── Scroll-triggered header ──────────────────────────────
 var header = document.getElementById('site-header');
