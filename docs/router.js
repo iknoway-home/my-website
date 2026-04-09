@@ -21,6 +21,7 @@ const THEMES = [
   { id: 'zen',        path: 'themes/zen/index.html',        weight: 1 },
   { id: 'space',      path: 'themes/space/index.html',      weight: 1 },
   { id: 'newspaper',  path: 'themes/newspaper/index.html',  weight: 1 },
+  { id: 'apple',      path: 'themes/apple/index.html',      weight: 1 },
 ];
 
 /** Weighted random selection from a list of themes. */

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>iKnoWay</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ── Nav (Apple-style translucent bar) ── -->
+  <nav class="site-nav" id="site-header">
+    <div class="nav-inner">
+      <span class="nav-logo">iKnoWay</span>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#anime">Anime</a></li>
+        <li><a href="#movies">Movies</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <a href="../../index.html?switch=1" class="nav-switch">Switch Theme</a>
+    </div>
+  </nav>
+
+  <!-- ── Hero (dark, cinematic) ── -->
+  <section class="hero" id="top">
+    <div class="hero-content reveal">
+      <p class="hero-eyebrow">Welcome</p>
+      <h1 class="hero-name" id="hero-name"></h1>
+      <p class="hero-role" id="hero-role"></p>
+      <p class="hero-tagline" id="hero-tagline"></p>
+      <div class="hero-cta">
+        <a href="#anime" class="btn-primary">
+          Explore Favorites <span class="arrow">&#8250;</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Stats ribbon (dark) ── -->
+  <div class="stats-section" id="stats">
+    <div class="stats-grid reveal-stagger" id="stats-grid"></div>
+  </div>
+
+  <!-- ── About (light gray) ── -->
+  <section class="section-light" id="about">
+    <div class="container">
+      <div class="sec-header reveal">
+        <p class="sec-eyebrow">About</p>
+        <h2 class="sec-title">A bit about me.</h2>
+      </div>
+      <div class="about-text reveal" id="about-paragraphs"></div>
+      <div class="facts-tiles reveal-stagger" id="about-facts"></div>
+      <div class="traits-wrap reveal" id="about-traits"></div>
+    </div>
+  </section>
+
+  <!-- ── Anime (dark) ── -->
+  <section class="section-dark" id="anime">
+    <div class="container">
+      <div class="sec-header reveal">
+        <p class="sec-eyebrow">Favorites</p>
+        <h2 class="sec-title"><span class="sec-title-gradient">Anime.</span></h2>
+        <p class="sec-subtitle">My all-time favorites that shaped who I am.</p>
+      </div>
+    </div>
+    <div class="works-grid reveal-stagger" id="anime-grid"></div>
+  </section>
+
+  <!-- ── Movies (light) ── -->
+  <section class="section-light" id="movies">
+    <div class="container">
+      <div class="sec-header reveal">
+        <p class="sec-eyebrow">Selection</p>
+        <h2 class="sec-title">Movies.</h2>
+        <p class="sec-subtitle">Films that changed how I see the world.</p>
+      </div>
+    </div>
+    <div class="works-grid reveal-stagger" id="movies-grid" style="padding: 0 24px;"></div>
+  </section>
+
+  <!-- ── Contact (dark) ── -->
+  <section class="section-dark" id="contact">
+    <div class="container">
+      <div class="sec-header reveal">
+        <p class="sec-eyebrow">Connect</p>
+        <h2 class="sec-title"><span class="sec-title-gradient">Get in touch.</span></h2>
+      </div>
+      <div class="contact-inner reveal">
+        <p class="contact-msg" id="contact-message"></p>
+        <div class="social-links" id="contact-social"></div>
+      </div>
+    </div>
+    <footer class="site-footer">
+      <p>&copy; 2026 iKnoWay</p>
+      <a href="../../index.html?switch=1" class="footer-switch">Switch Theme</a>
+    </footer>
+  </section>
+
+  <script src="../../shared/utils.js"></script>
+  <script src="../../shared/data.js"></script>
+  <script src="../../shared/snap.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
