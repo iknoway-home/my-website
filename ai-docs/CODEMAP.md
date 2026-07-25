@@ -27,7 +27,7 @@
 | サイト起動（ローダー） | `docs/index.html` | `docs/theme-router.js` | エントリーポイント。ローダー画面を表示してテーマへ遷移 |
 | テーマ選択 / 切替 | `docs/theme-router.js` | `THEMES` 配列 | 重み付きランダム。`?theme=<id>` 固定、`?switch=1` 強制切替、`sessionStorage` で保持 |
 | コンテンツデータ | `docs/shared/data.js` | 全テーマの `script.js` | `window.__data`。コンテンツ変更はここだけ |
-| 各テーマ | `docs/themes/<name>/index.html` | 同ディレクトリの `style.css` / `script.js` | 16 テーマ。一覧は `docs/theme-router.js` を正とする |
+| 各テーマ | `docs/themes/<name>/index.html` | 同ディレクトリの `style.css` / `script.js` | 19 テーマ。一覧は `docs/theme-router.js` を正とする |
 | ゲームセクション挿入 | `docs/shared/games.js` | `data.js` の `games` | 通常テーマで Anime 直前に自動挿入 |
 | 成果物セクション挿入 | `docs/shared/projects.js` | `data.js` の `projects` | 通常テーマで Contact 直前に自動挿入 |
 | スクロールスナップ共通 | `docs/shared/snap.js` | 各テーマ | `projects.js` の後に読み込む |
@@ -55,6 +55,12 @@
 |---|---|---|
 | `docs/` | GitHub Pages 公開ディレクトリ（サイト本体） | AI 用ドキュメントを置かない。プッシュ = 公開 |
 | `docs/themes/` | 各テーマ | テーマ追加時は `theme-router.js` と README も更新 |
+
+新規テーマの入口:
+
+- `docs/themes/ukiyo-e/` — 浮世絵・和紙・藍と朱の世界観
+- `docs/themes/gothic/` — 深夜の書庫をイメージしたゴシックテーマ
+- `docs/themes/handheld/` — 緑液晶のレトロ携帯ゲーム機テーマ
 | `docs/shared/` | 全テーマ共通資産 | 読み込み順に注意（`AGENTS.md` 参照） |
 | `ai-docs/` | 設計、運用、意思決定 | 古い情報を残さない |
 | `sops/` | 再利用手順 | 作業が固定化したら追加 |

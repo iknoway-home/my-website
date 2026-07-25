@@ -151,6 +151,20 @@ button {
   pointer-events: none;
 }
 
+.footer-hint-touch {
+  display: none;
+}
+
+@media (pointer: coarse) {
+  .footer-hint-desktop {
+    display: none;
+  }
+
+  .footer-hint-touch {
+    display: block;
+  }
+}
+
 .sigil {
   display: grid;
   place-items: center;
@@ -895,6 +909,11 @@ body.turning-prev .book {
 }
 
 @media (max-width: 520px) {
+  .cover-page h1 {
+    font-size: clamp(1.1rem, 7vw, 1.45rem);
+    letter-spacing: 0.01em;
+  }
+
   .cover-role,
   .cover-copy {
     font-size: 0.82rem;

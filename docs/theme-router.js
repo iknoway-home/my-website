@@ -25,6 +25,9 @@ const THEMES = [
   { id: 'fantasy-book', path: 'themes/fantasy-book/index.html', weight: 1 },
   { id: 'winxp',      path: 'themes/winxp/index.html',      weight: 1 },
   { id: 'data-js',    path: 'themes/data-js/index.html',    weight: 1 },
+  { id: 'ukiyo-e',    path: 'themes/ukiyo-e/index.html',    weight: 1 },
+  { id: 'gothic',     path: 'themes/gothic/index.html',     weight: 1 },
+  { id: 'handheld',   path: 'themes/handheld/index.html',   weight: 1 },
 ];
 
 /** Weighted random selection from a list of themes. */
