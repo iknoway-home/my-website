@@ -237,7 +237,7 @@ rules / skills を作成・更新した場合は、`ai-docs/CODEMAP.md` また�
 ├── GEMINI.md              # Gemini CLI 用入口（同上）
 ├── QWEN.md                # Qwen Code 用入口（同上）
 ├── DESIGN.md              # UI / UX / デザイン設計・テーマ実装詳細
-├── FEATURE_IDEAS.md       # 機能アイデアのメモ
+├── plans/FEATURE_IDEAS.md       # 機能アイデアのメモ
 └── README.md              # 外部向けドキュメント
 ```
 
