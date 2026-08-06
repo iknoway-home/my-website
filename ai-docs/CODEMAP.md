@@ -30,9 +30,9 @@
 | 各テーマ | `docs/themes/<name>/index.html` | 同ディレクトリの `style.css` / `script.js` | 19 テーマ。一覧は `docs/theme-router.js` を正とする |
 | ゲームセクション挿入 | `docs/shared/games.js` | `data.js` の `games` | 通常テーマで Anime 直前に自動挿入 |
 | 成果物セクション挿入 | `docs/shared/projects.js` | `data.js` の `projects` | 通常テーマで Contact 直前に自動挿入 |
-| スクロールスナップ共通 | `docs/shared/snap.js` | 各テーマ | `projects.js` の後に読み込む |
+| スクロールナビ共通 | `docs/shared/snap.js` | 各テーマ | 右下の1ボタンで次セクションへ進み、最終位置では先頭へ戻る。`projects.js` の後に読み込む |
 | 共通ユーティリティ | `docs/shared/utils.js` | 全テーマ | `window.__utils`。テーマ切替の補足と共通更新日表示も担当 |
-| ヘッダー / 共通ボタン寸法 | `docs/shared/human-polish.css` | 各テーマの `style.css` | 位置・サイズ・ヒットエリアの共通レイヤー。`--chrome-*` 変数 |
+| ヘッダー / 共通導線 | `docs/shared/human-polish.css` | `docs/shared/utils.js`, 各テーマの `style.css` | テーマ切替のコントラスト、行き先一覧、ヒーロー高、浮遊操作の位置・寸法を共通化 |
 | スタイル / テーマ方針 | `DESIGN.md` | 各テーマの `style.css` | カラーパレット・フォント・演出の詳細 |
 | 確認手順 | `ai-docs/TESTING.md` | — | ローカルサーバーでの手動確認 |
 | デプロイ | `ai-docs/OPERATIONS.md` | — | GitHub Pages（プッシュ = デプロイ） |

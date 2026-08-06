@@ -136,6 +136,32 @@ function polishSharedChrome() {
     updated.textContent = '最終更新 ' + updatedAt;
     footer.appendChild(updated);
   }
+
+  var hero = document.querySelector('.hero');
+  if (hero && !document.querySelector('.site-map-strip')) {
+    var destinations = [
+      { id: 'about', label: '自己紹介' },
+      { id: 'games', label: 'ゲーム' },
+      { id: 'anime', label: 'アニメ' },
+      { id: 'movies', label: '映画' },
+      { id: 'projects', label: '制作' },
+      { id: 'contact', label: '連絡' },
+    ].filter(function (item) {
+      return document.getElementById(item.id);
+    });
+
+    if (destinations.length) {
+      var siteMap = document.createElement('nav');
+      siteMap.className = 'site-map-strip';
+      siteMap.setAttribute('aria-label', 'このサイトにあるもの');
+      siteMap.innerHTML = '<span class="site-map-label">このサイトにあるもの</span><ul>' +
+        destinations.map(function (item) {
+          return '<li><a href="#' + item.id + '">' + item.label + '</a></li>';
+        }).join('') +
+        '</ul>';
+      hero.insertAdjacentElement('afterend', siteMap);
+    }
+  }
 }
 
 if (document.readyState === 'loading') {

@@ -96,7 +96,6 @@ button {
   --chrome-float-size: 48px;
   --chrome-float-right: 24px;
   --chrome-float-bottom: 24px;
-  --chrome-top-bottom: 84px;
 }
 
 :is(.site-header, .site-header.scrolled, .site-nav) {
@@ -112,7 +111,7 @@ button {
   padding: 0 var(--chrome-header-inline);
 }
 
-:is(.site-header, .site-header.scrolled, .site-nav, .nav-inner, .nav-switch, .theme-switch, .book-header, .sigil, .chapter-nav, .chapter-nav button, .snap-next-btn, .top-btn) {
+:is(.site-header, .site-header.scrolled, .site-nav, .nav-inner, .nav-switch, .theme-switch, .book-header, .sigil, .chapter-nav, .chapter-nav button, .snap-next-btn) {
   box-sizing: border-box;
 }
 
@@ -178,44 +177,89 @@ button {
   white-space: nowrap;
 }
 
-.snap-next-btn,
-.top-btn {
+/* Theme switching is a primary site action. Keep it readable even when a
+   theme's decorative palette uses a faint muted color. */
+:is(.nav-switch, .theme-switch) {
+  border-color: currentColor !important;
+  background-color: rgba(127, 127, 127, 0.12) !important;
+  background-color: color-mix(in srgb, currentColor 10%, transparent) !important;
+  color: var(--ink, var(--text, var(--fg, inherit))) !important;
+  font-weight: 700;
+  opacity: 1 !important;
+}
+
+:is(.nav-switch, .theme-switch):where(:hover, :focus-visible) {
+  background-color: color-mix(in srgb, currentColor 18%, transparent) !important;
+}
+
+.site-map-strip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(18px, 4vw, 48px);
+  min-height: 62px;
+  padding: 12px var(--chrome-header-inline);
+  border-top: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+  border-color: color-mix(in srgb, currentColor 28%, transparent);
+  background: var(--bg, var(--background, Canvas));
+  color: var(--ink, var(--text, var(--fg, CanvasText)));
+}
+
+.site-map-label {
+  flex: 0 0 auto;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.site-map-strip ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px clamp(14px, 2.5vw, 28px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-map-strip a {
+  color: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, currentColor 40%, transparent);
+}
+
+@media (min-width: 761px) {
+  .hero {
+    min-height: min(78svh, 720px);
+  }
+}
+
+.snap-next-btn {
   width: var(--chrome-float-size);
   height: var(--chrome-float-size);
   padding: 0;
 }
 
 .snap-next-btn {
-  left: var(--chrome-float-right);
-  right: auto;
+  left: auto;
+  right: var(--chrome-float-right);
   bottom: var(--chrome-float-bottom);
   transform: none;
 }
 
-.snap-prev-btn {
-  left: calc(var(--chrome-float-right) + var(--chrome-float-size) + 10px);
-}
-
+.snap-prev-btn,
 .top-btn {
-  right: var(--chrome-float-right);
-  bottom: var(--chrome-float-bottom);
+  display: none !important;
 }
 
 .snap-next-btn:hover {
   transform: translateY(-3px);
 }
 
-.snap-next-btn:disabled {
-  cursor: default;
-  opacity: 0.38;
-}
-
-.snap-next-btn:disabled:hover {
-  transform: none;
-}
-
-.snap-next-btn--up svg,
-.top-btn--down svg {
+.snap-next-btn--up svg {
   transform: none;
 }
 
@@ -413,7 +457,6 @@ button {
     --chrome-float-size: 42px;
     --chrome-float-right: 16px;
     --chrome-float-bottom: 20px;
-    --chrome-top-bottom: 76px;
   }
 
   .nav-links {
@@ -428,6 +471,20 @@ button {
 
   .chapter-nav::-webkit-scrollbar {
     display: none;
+  }
+
+  .site-map-strip {
+    display: block;
+    padding: 12px 16px;
+  }
+
+  .site-map-label {
+    display: block;
+    margin-bottom: 7px;
+  }
+
+  .site-map-strip ul {
+    justify-content: flex-start;
   }
 }
 
