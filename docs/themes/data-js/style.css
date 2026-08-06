@@ -191,6 +191,13 @@ h2 {
   background: rgba(112, 225, 184, 0.12);
 }
 
+footer {
+  padding: 20px clamp(18px, 5vw, 70px);
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
 @media (max-width: 760px) {
   .code-frame {
     border-radius: 4px;

@@ -19,7 +19,7 @@
 ```text
 訪問者
   -> docs/index.html（ローダー）
-  -> docs/theme-router.js（重み付きランダムでテーマ選択、sessionStorage で保持）
+  -> docs/theme-router.js（重み付きランダムでテーマ選択、localStorage で保持）
   -> docs/themes/<name>/index.html（選ばれたテーマ）
        ├─ shared/data.js   … window.__data（全コンテンツ）
        ├─ shared/utils.js  … window.__utils
@@ -34,7 +34,7 @@
 
 | レイヤー | 責務 | 置き場所 |
 |---|---|---|
-| エントリ / ルーティング | ローダー表示、テーマ選択、セッション保持 | `docs/index.html`, `docs/theme-router.js` |
+| エントリ / ルーティング | ローダー表示、テーマ選択、端末内保持 | `docs/index.html`, `docs/theme-router.js` |
 | コンテンツデータ | 全テーマ共通のコンテンツ（単一の正） | `docs/shared/data.js` |
 | 共通資産 | ユーティリティ、共通セクション挿入、共通クローム寸法 | `docs/shared/` |
 | テーマ | 世界観（配色・フォント・演出）と `window.__data` の描画 | `docs/themes/<name>/` |
@@ -44,7 +44,7 @@
 
 | 流れ | 説明 | 入口 |
 |---|---|---|
-| テーマ選択 | URL パラメータ（`?theme=` / `?switch=1`）と `sessionStorage` を確認し、重み付きランダムで選択して遷移 | `docs/theme-router.js` |
+| テーマ選択 | URL パラメータ（`?theme=` / `?switch=1`）と `localStorage` を確認し、重み付きランダムで選択して遷移 | `docs/theme-router.js` |
 | コンテンツ描画 | ページ読み込み時に各テーマの `script.js` が `window.__data` を読んで DOM を生成 | 各テーマの `script.js` |
 | セクション自動挿入 | `games.js` / `projects.js` が該当セクションを DOM に挿入 | `docs/shared/games.js`, `docs/shared/projects.js` |
 
@@ -52,7 +52,7 @@
 
 | 種類 | 管理場所 | 永続化 | 注意 |
 |---|---|---|---|
-| 選択中テーマ | `sessionStorage` | セッション中のみ | リロードで同じテーマ。新セッションで再抽選 |
+| 選択中テーマ | `localStorage` | 次回訪問まで | リロード・再訪で同じテーマ。切替ボタンで別テーマを保存 |
 | ユーザー設定類 | `localStorage`（`__utils.getLocal` / `setLocal` 経由） | あり | try-catch 付きヘルパーを使う |
 | サーバー状態 | なし | — | バックエンドなし |
 
@@ -71,7 +71,7 @@
 | 依存 | 用途 | 代替 / 注意 |
 |---|---|---|
 | Google Fonts | 各テーマのフォント | 使うウェイトのみ。`font-display: swap` |
-| ブラウザ標準 API | Canvas / IntersectionObserver / sessionStorage など | ポリフィルなし。フォールバック前提で段階導入 |
+| ブラウザ標準 API | Canvas / IntersectionObserver / localStorage など | ポリフィルなし。フォールバック前提で段階導入 |
 
 外部 JS ライブラリへの依存はゼロ。維持を優先する。
 

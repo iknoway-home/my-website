@@ -69,6 +69,16 @@ button {
   background: var(--human-selection-bg, #f5d76e);
 }
 
+.site-updated {
+  display: block;
+  margin-top: 0.55rem;
+  color: inherit;
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+  opacity: 0.78;
+}
+
 /* Shared chrome contract:
    Theme CSS owns colors, borders, radius, shadows, and motion.
    This layer owns header/control geometry so every theme keeps the

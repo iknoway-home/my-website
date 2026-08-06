@@ -32,6 +32,10 @@ const otakuYears = yearsSince(dateBases.otakuHistoryStart);
 window.__data = {
   dateBases,
 
+  site: {
+    updatedAt: "2026-08-07",
+  },
+
   profile: {
     name: "iKnoWay",
     role: "Anime Enthusiast & Culture Explorer",

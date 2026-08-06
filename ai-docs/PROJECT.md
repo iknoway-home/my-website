@@ -23,7 +23,7 @@ AI エージェントや新しい開発者が最初に読む前提情報とし�
 | プロジェクト名 | iKnoWay Personal Site |
 | 目的 | アニメと映画を愛するオタク iKnoWay のプロフィール・お気に入り作品・成果物を紹介する |
 | 主なユーザー | サイト訪問者（iKnoWay に興味を持った人、テーマガチャを楽しむ人） |
-| 利用シーン | アクセスするたびにテーマがランダムで切り替わる「ガチャ体験」つきポートフォリオ閲覧 |
+| 利用シーン | 初回ランダム選択と明示的なテーマ切替を楽しめる「ガチャ体験」つきポートフォリオ閲覧 |
 | 現在のフェーズ | 運用中。テーマ追加と既存テーマの磨き込みを継続 |
 | 本番 URL | https://iknoway-home.github.io/my-website/ |
 | リポジトリ | my-homepage（GitHub、`main` ブランチ / `/docs` を公開） |
@@ -32,7 +32,7 @@ AI エージェントや新しい開発者が最初に読む前提情報とし�
 
 | 機能 | 概要 | 入口 |
 |---|---|---|
-| テーマランダム切替 | 重み付きランダムでテーマを選択、`sessionStorage` でセッション中固定 | `docs/index.html` + `docs/theme-router.js` |
+| テーマランダム切替 | 重み付きランダムでテーマを選択、`localStorage` で次回訪問まで固定 | `docs/index.html` + `docs/theme-router.js` |
 | 16 テーマ | classy / cyber / anime / y2k / terminal / magazine / kawaii / brutalist / vaporwave / zen / space / newspaper / apple / fantasy-book / winxp / data-js | `docs/themes/<name>/` |
 | 共通コンテンツデータ | 全テーマが同じデータを読み描画する | `docs/shared/data.js`（`window.__data`） |
 | ゲーム / 成果物セクション自動挿入 | 通常テーマに共通スクリプトでセクションを挿入 | `docs/shared/games.js` / `docs/shared/projects.js` |

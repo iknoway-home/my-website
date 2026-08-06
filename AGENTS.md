@@ -213,7 +213,7 @@ rules / skills を作成・更新した場合は、`ai-docs/CODEMAP.md` また�
 | プロジェクト名 | iKnoWay Personal Site |
 | 目的 | アニメと映画を愛するオタク iKnoWay のプロフィール・お気に入り作品・成果物を紹介する個人サイト |
 | 主なユーザー | サイト訪問者（iKnoWay に興味を持った人） |
-| 特徴 | アクセスするたびにテーマがランダムで切り替わる「ガチャ体験」。16 テーマ実装済み |
+| 特徴 | 初回ランダム選択と明示的な切替による「ガチャ体験」。選択は端末内に保存。19 テーマ実装済み |
 | 技術スタック | 素の HTML / CSS / JS（詳細は `ai-docs/PROJECT.md`） |
 | 機能の置き場所 | `ai-docs/CODEMAP.md` を参照 |
 | 設計方針 | `ai-docs/ARCHITECTURE.md` を参照 |

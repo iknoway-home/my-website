@@ -110,6 +110,40 @@ async function copyToClipboard(text) {
 const prefersReducedMotion = () =>
   window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+/* ── Shared site chrome ─────────────────────────────────── */
+
+function currentThemeId() {
+  var match = window.location.pathname.match(/\/themes\/([^/]+)\//);
+  return match ? match[1] : '';
+}
+
+function polishSharedChrome() {
+  var themeId = currentThemeId();
+  document.querySelectorAll('a[href*="switch=1"]').forEach(function (link) {
+    var label = themeId
+      ? 'テーマを切り替える（現在: ' + themeId + '／選択は次回も保存）'
+      : 'テーマを切り替える（選択は次回も保存）';
+    link.setAttribute('aria-label', label);
+    link.setAttribute('title', label);
+    link.textContent = 'テーマ変更';
+  });
+
+  var footer = document.querySelector('footer');
+  var updatedAt = window.__data && window.__data.site && window.__data.site.updatedAt;
+  if (footer && updatedAt && !footer.querySelector('.site-updated')) {
+    var updated = document.createElement('small');
+    updated.className = 'site-updated';
+    updated.textContent = '最終更新 ' + updatedAt;
+    footer.appendChild(updated);
+  }
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', polishSharedChrome, { once: true });
+} else {
+  polishSharedChrome();
+}
+
 // Export as globals for use by theme scripts (no bundler required)
 window.__utils = {
   $, $$,

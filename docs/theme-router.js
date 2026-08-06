@@ -1,8 +1,8 @@
 /**
  * theme-router.js — Theme selection logic
  *
- * Normal visit:   picks a random theme, stores it in sessionStorage
- *                 so the same theme is shown for the whole session.
+ * Normal visit:   picks a random theme, stores it in localStorage
+ *                 so the preferred theme survives future visits.
  * ?switch=1:      clears the stored theme, forces a DIFFERENT theme,
  *                 used by every "Switch / Gacha" button on the site.
  * ?theme=classy:  dev override – forces a specific theme.
@@ -46,12 +46,20 @@ function pickTheme(themes) {
  *
  * Priority order:
  *  1. ?switch=1   → force-pick a DIFFERENT theme, persist it
- *  2. sessionStorage hit → return same theme (session-stable)
- *  3. ?theme=xxx  → dev override
+ *  2. ?theme=xxx  → explicit theme choice, persist it
+ *  3. localStorage hit → return the saved theme
  *  4. random pick
  */
 function resolveTheme() {
   const params = new URLSearchParams(window.location.search);
+
+  function getSavedTheme() {
+    try { return localStorage.getItem('selectedTheme'); } catch { return null; }
+  }
+
+  function saveTheme(id) {
+    try { localStorage.setItem('selectedTheme', id); } catch {}
+  }
 
   // ── Switch (Gacha) button was clicked ──────────────────
   if (params.get('switch') === '1') {
@@ -60,36 +68,35 @@ function resolveTheme() {
     const clean = location.pathname + (params.toString() ? '?' + params.toString() : '');
     history.replaceState(null, '', clean);
 
-    const current = sessionStorage.getItem('selectedTheme');
-    sessionStorage.removeItem('selectedTheme');
+    const current = getSavedTheme();
 
     // Pick a theme that is DIFFERENT from the current one
     const pool = current ? THEMES.filter(t => t.id !== current) : THEMES;
     const chosen = pickTheme(pool.length ? pool : THEMES);
-    sessionStorage.setItem('selectedTheme', chosen.id);
+    saveTheme(chosen.id);
     return chosen;
   }
 
-  // ── Session-stable: return the already-chosen theme ────
-  const stored = sessionStorage.getItem('selectedTheme');
+  // ── Explicit choice (?theme=classy etc.) ───────────────
+  const override = params.get('theme');
+  if (override) {
+    const found = THEMES.find(t => t.id === override);
+    if (found) {
+      saveTheme(found.id);
+      return found;
+    }
+  }
+
+  // ── Saved preference: return the already-chosen theme ──
+  const stored = getSavedTheme();
   if (stored) {
     const found = THEMES.find(t => t.id === stored);
     if (found) return found;
   }
 
-  // ── Dev override (?theme=classy etc.) ──────────────────
-  const override = params.get('theme');
-  if (override) {
-    const found = THEMES.find(t => t.id === override);
-    if (found) {
-      sessionStorage.setItem('selectedTheme', found.id);
-      return found;
-    }
-  }
-
   // ── Fresh random pick ──────────────────────────────────
   const chosen = pickTheme(THEMES);
-  sessionStorage.setItem('selectedTheme', chosen.id);
+  saveTheme(chosen.id);
   return chosen;
 }
 
