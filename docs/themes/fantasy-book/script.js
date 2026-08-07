@@ -83,7 +83,6 @@
     return data.social.map(function (social) {
       return '<a href="' + escapeHtml(social.url) + '" target="_blank" rel="noopener" aria-label="' +
         escapeHtml(social.name) + '">' +
-        (social.icon ? '<span class="social-icon">' + social.icon + '</span>' : '') +
         '<span>' + escapeHtml(social.name) + '</span></a>';
     }).join('');
   }

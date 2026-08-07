@@ -50,24 +50,7 @@ body {
   overflow: hidden;
   color: var(--ink);
   font-family: var(--jp);
-  background:
-    radial-gradient(circle at 50% 35%, rgba(220, 170, 94, 0.18), transparent 33rem),
-    linear-gradient(120deg, rgba(33, 49, 37, 0.65), transparent 45%),
-    linear-gradient(240deg, rgba(82, 25, 18, 0.52), transparent 46%),
-    #130c08;
-}
-
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
-  background-size: 38px 38px, 38px 38px;
-  mask-image: radial-gradient(circle at center, black, transparent 75%);
-  opacity: 0.5;
+  background: #130c08;
 }
 
 body::after {
@@ -92,37 +75,6 @@ a {
 
 button {
   cursor: pointer;
-}
-
-.ambient {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-.ambient::before,
-.ambient::after {
-  content: "";
-  position: absolute;
-  width: 48vmin;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  border: 1px solid rgba(216, 183, 106, 0.14);
-  transform: rotate(26deg);
-}
-
-.ambient::before {
-  top: 7%;
-  left: 6%;
-  box-shadow: inset 0 0 80px rgba(216, 183, 106, 0.08);
-}
-
-.ambient::after {
-  right: 5%;
-  bottom: 4%;
-  width: 38vmin;
-  border-color: rgba(109, 23, 21, 0.24);
 }
 
 .book-header,
@@ -172,10 +124,9 @@ button {
   height: 46px;
   flex: 0 0 auto;
   border: 1px solid rgba(216, 183, 106, 0.45);
-  border-radius: 50%;
+  border-radius: 2px;
   color: var(--gold-bright);
   background: rgba(20, 10, 6, 0.56);
-  box-shadow: 0 0 26px rgba(216, 183, 106, 0.1);
 }
 
 .chapter-nav {
@@ -183,9 +134,8 @@ button {
   gap: 8px;
   padding: 5px;
   border: 1px solid rgba(216, 183, 106, 0.2);
-  border-radius: 999px;
+  border-radius: 2px;
   background: rgba(19, 12, 8, 0.56);
-  backdrop-filter: blur(10px);
 }
 
 .chapter-nav button,
@@ -201,7 +151,7 @@ button {
 .chapter-nav button {
   min-width: 72px;
   padding: 9px 12px;
-  border-radius: 999px;
+  border-radius: 2px;
   font-size: 0.68rem;
   line-height: 1;
   text-transform: uppercase;
@@ -221,9 +171,18 @@ button {
 .theme-switch {
   margin-left: auto;
   padding: 12px 16px;
-  border-radius: 999px;
+  border-radius: 2px;
   font-size: 0.68rem;
   white-space: nowrap;
+}
+
+/* The shared switch chrome otherwise picks up the paper's dark ink token. */
+.book-header .theme-switch,
+.book-header .theme-switch:hover,
+.book-header .theme-switch:focus-visible {
+  color: #f4e0b0 !important;
+  border-color: #b6863c !important;
+  background-color: #24120c !important;
 }
 
 .library-shell {
@@ -378,22 +337,15 @@ button {
   font-size: clamp(0.72rem, 1.8vw, 0.9rem);
 }
 
-.cover-emblem {
-  display: grid;
-  place-items: center;
-  width: min(190px, 46%);
-  aspect-ratio: 1;
+.cover-edition {
   margin: clamp(24px, 4vw, 38px) auto;
-  border: 1px solid rgba(216, 183, 106, 0.58);
-  border-radius: 50%;
-}
-
-.cover-emblem span {
-  width: 54%;
-  aspect-ratio: 1;
-  border: 2px solid rgba(216, 183, 106, 0.82);
-  transform: rotate(45deg);
-  box-shadow: inset 0 0 0 18px rgba(216, 183, 106, 0.08), 0 0 34px rgba(216, 183, 106, 0.14);
+  padding-block: 12px;
+  border-block: 1px solid rgba(216, 183, 106, 0.58);
+  color: var(--gold-bright);
+  font-family: var(--display);
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
 }
 
 h1,
@@ -427,6 +379,10 @@ h3 {
   margin-bottom: 12px;
   color: var(--red);
   font-size: clamp(0.64rem, 1.5vw, 0.74rem);
+}
+
+.cover-page .chapter-kicker {
+  color: #f4e0b0;
 }
 
 h2 {
@@ -468,9 +424,9 @@ blockquote {
 }
 
 .hero-stats {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 0;
   margin: clamp(24px, 4vw, 34px) auto 0;
   max-width: 430px;
 }
@@ -483,7 +439,9 @@ blockquote {
 
 .hero-stats div {
   padding: 14px 8px;
+  border-width: 0 1px 0 0;
 }
+.hero-stats div:last-child { border-right: 0; }
 
 .hero-stats strong {
   display: block;
@@ -508,7 +466,7 @@ blockquote {
   min-height: 42px;
   padding: 12px 18px;
   margin-top: 28px;
-  border-radius: 999px;
+  border-radius: 2px;
   font-family: var(--display);
   font-size: 0.72rem;
   letter-spacing: 0.1em;
@@ -550,7 +508,7 @@ blockquote {
   max-width: 100%;
   padding: 5px 9px;
   border: 1px solid rgba(89, 58, 27, 0.25);
-  border-radius: 999px;
+  border-radius: 0;
   color: #51301d;
   background: rgba(102, 59, 26, 0.08);
   font-size: clamp(0.63rem, 1.2vw, 0.74rem);
@@ -612,17 +570,6 @@ blockquote {
   letter-spacing: 0.08em;
 }
 
-.social-icon {
-  display: inline-flex;
-  width: 22px;
-  height: 22px;
-}
-
-.social-icon svg {
-  width: 100%;
-  height: 100%;
-}
-
 .page-control {
   position: fixed;
   top: 50%;
@@ -632,11 +579,10 @@ blockquote {
   width: clamp(42px, 5vw, 56px);
   height: clamp(72px, 10vw, 104px);
   border: 1px solid rgba(216, 183, 106, 0.36);
-  border-radius: 999px;
+  border-radius: 2px;
   color: #f6dfaa;
   background: rgba(20, 10, 6, 0.55);
   transform: translateY(-50%);
-  backdrop-filter: blur(10px);
   transition: opacity 180ms ease, transform 180ms ease, background 180ms ease;
 }
 
@@ -870,15 +816,14 @@ body.turning-prev .book {
     inset: 10px;
   }
 
-  .cover-emblem {
-    width: min(120px, 58%);
-    margin-block: 18px;
-  }
-
   .hero-stats,
   .facts-grid {
     grid-template-columns: 1fr;
   }
+
+  .hero-stats { flex-direction: column; }
+  .hero-stats div { border-width: 0 0 1px; }
+  .hero-stats div:last-child { border-bottom: 0; }
 
   .chapter-nav {
     max-width: calc(100vw - 116px);

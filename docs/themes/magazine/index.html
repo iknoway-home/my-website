@@ -1,88 +1,56 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>iKnoWay — Magazine</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="../../shared/human-polish.css" />
 </head>
 <body>
-
   <header class="site-header" id="site-header">
-    <nav class="nav-inner">
-      <span class="nav-logo">iKnoWay</span>
-      <ul class="nav-links">
-        <li><a href="#about">About</a></li>
-        <li><a href="#anime">Anime</a></li>
-        <li><a href="#movies">Movies</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-      <a href="../../index.html?switch=1" class="nav-switch">Switch Theme</a>
+    <nav class="nav-inner" aria-label="Primary navigation">
+      <a class="nav-logo" href="#top">IK / Journal</a>
+      <ul class="nav-links"><li><a href="#about">Profile</a></li><li><a href="#anime">Anime</a></li><li><a href="#movies">Cinema</a></li><li><a href="#contact">Contact</a></li></ul>
+      <a href="../../index.html?switch=1" class="nav-switch">Next edition</a>
     </nav>
   </header>
 
-  <section class="hero" id="top">
-    <div class="hero-content reveal">
-      <p class="hero-issue">Issue No. 01 / 2026</p>
-      <h1 class="hero-name" id="hero-name"></h1>
-      <div class="hero-rule"></div>
-      <p class="hero-role" id="hero-role"></p>
-      <p class="hero-tagline" id="hero-tagline"></p>
-    </div>
-  </section>
-
-  <section class="section" id="about">
-    <div class="container">
-      <p class="section-eyebrow reveal">Profile</p>
-      <h2 class="section-title reveal">A Bit About Me</h2>
-      <div class="section-rule reveal"></div>
-      <div class="about-cols reveal" id="about-content"></div>
-      <div class="facts-row reveal" id="about-facts"></div>
-    </div>
-  </section>
-
-  <section class="section section-alt" id="anime">
-    <div class="container">
-      <p class="section-eyebrow reveal">Collection</p>
-      <h2 class="section-title reveal">Favorite Anime</h2>
-      <div class="section-rule reveal"></div>
-      <div class="works-grid" id="anime-grid"></div>
-    </div>
-  </section>
-
-  <section class="section" id="movies">
-    <div class="container">
-      <p class="section-eyebrow reveal">Selection</p>
-      <h2 class="section-title reveal">Favorite Movies</h2>
-      <div class="section-rule reveal"></div>
-      <div class="works-grid" id="movies-grid"></div>
-    </div>
-  </section>
-
-  <section class="section section-alt" id="contact">
-    <div class="container">
-      <p class="section-eyebrow reveal">Connect</p>
-      <h2 class="section-title reveal">Get In Touch</h2>
-      <div class="section-rule reveal"></div>
-      <div class="contact-inner reveal">
-        <p class="contact-msg" id="contact-message"></p>
-        <div class="social-links" id="contact-social"></div>
+  <main>
+    <section class="cover" id="top">
+      <div class="cover-top"><span>Culture / Anime / Cinema</span><span>Vol. 01 — 2026</span></div>
+      <div class="cover-grid">
+        <div><p class="cover-kicker">The personal issue</p><h1 id="hero-name"></h1></div>
+        <aside><p id="hero-role" class="hero-role"></p><p id="hero-tagline" class="hero-tagline"></p><a href="#about">Read the issue</a></aside>
       </div>
-    </div>
-    <footer class="site-footer">
-      <p>&copy; 2026 iKnoWay</p>
-    </footer>
-  </section>
+      <p class="cover-foot">A field guide to stories worth remembering</p>
+    </section>
 
-  <script src="../../shared/utils.js"></script>
-  <script src="../../shared/data.js"></script>
-  <script src="../../shared/games.js"></script>
-  <script src="../../shared/projects.js"></script>
-  <script src="../../shared/snap.js"></script>
-  <script src="script.js"></script>
+    <section class="section" id="about">
+      <header class="section-head"><p>01 / Profile</p><h2>A bit about me</h2></header>
+      <div class="about-layout"><div id="about-content" class="about-copy"></div><aside><p class="pull-quote" id="pull-quote"></p><dl id="about-facts" class="facts"></dl></aside></div>
+    </section>
+
+    <section class="section section-dark" id="anime">
+      <header class="section-head"><p>02 / Collection</p><h2>Anime index</h2></header>
+      <div id="anime-list" class="editorial-list"></div>
+    </section>
+
+    <section class="section" id="movies">
+      <header class="section-head"><p>03 / Screening room</p><h2>Cinema index</h2></header>
+      <div id="movies-list" class="editorial-list"></div>
+    </section>
+
+    <section class="section contact" id="contact">
+      <header class="section-head"><p>04 / Back page</p><h2>Get in touch</h2></header>
+      <div class="contact-layout"><p id="contact-message"></p><div id="contact-social" class="social-links"></div></div>
+      <footer><span>IK / Journal</span><span>© 2026 iKnoWay</span></footer>
+    </section>
+  </main>
+
+  <script src="../../shared/utils.js"></script><script src="../../shared/data.js"></script><script src="../../shared/games.js"></script><script src="../../shared/projects.js"></script><script src="../../shared/snap.js"></script><script src="script.js"></script>
 </body>
 </html>

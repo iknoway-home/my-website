@@ -1,1 +1,29 @@
-(function(){'use strict';var d=window.__data;if(!d)return;document.getElementById('hero-name').textContent=d.profile.name;document.getElementById('hero-role').textContent=d.profile.role;document.getElementById('hero-tagline').innerHTML=d.profile.tagline.replace(/\n/g,'<br>');document.getElementById('about-paragraphs').innerHTML=d.profile.about.map(function(t){return '<p>'+t+'</p>';}).join('');document.getElementById('about-facts').innerHTML=d.profile.facts.map(function(f){return '<li><span>'+f.label+'</span><b>'+f.value+'</b></li>';}).join('');function render(id,items){document.getElementById(id).innerHTML=items.map(function(x,i){return '<article class="work reveal"><span class="number">NO.'+String(i+1).padStart(2,'0')+'</span><h3>'+x.title+'</h3><p>'+x.comment+'</p><div class="tags">'+x.tags.map(function(t){return '<span>'+t+'</span>';}).join('')+'</div></article>';}).join('');}render('anime-grid',d.anime);render('movies-grid',d.movies);document.getElementById('contact-message').textContent=d.contact.message;document.getElementById('contact-social').innerHTML=d.social.map(function(s){return '<a href="'+s.url+'" target="_blank" rel="noopener">'+(s.icon||'')+s.name+'</a>';}).join('');var es=document.querySelectorAll('.reveal');if(window.__utils.prefersReducedMotion()){es.forEach(function(e){e.classList.add('visible');});}else{var io=new IntersectionObserver(function(xs){xs.forEach(function(x){if(x.isIntersecting){x.target.classList.add('visible');io.unobserve(x.target);}});},{threshold:.1});es.forEach(function(e){io.observe(e);});}}());
+(function () {
+  'use strict';
+  var data = window.__data;
+  if (!data) return;
+
+  document.getElementById('hero-name').textContent = data.profile.name;
+  document.getElementById('hero-role').textContent = data.profile.role;
+  document.getElementById('hero-tagline').innerHTML = data.profile.tagline.replace(/\n/g, '<br>');
+  document.getElementById('about-paragraphs').innerHTML = data.profile.about.map(function (text) {
+    return '<p>&gt; ' + text + '</p>';
+  }).join('');
+  document.getElementById('about-facts').innerHTML = data.profile.facts.map(function (fact) {
+    return '<div><dt>' + fact.label + '</dt><dd>' + fact.value + '</dd></div>';
+  }).join('');
+
+  function renderSaves(id, items) {
+    document.getElementById(id).innerHTML = items.map(function (item, index) {
+      return '<li><span class="slot">' + String(index + 1).padStart(2, '0') + '</span>' +
+        '<div><h3>' + item.title + '</h3><p>' + item.comment + '</p><p class="tags">' + item.tags.join(' / ') + '</p></div></li>';
+    }).join('');
+  }
+
+  renderSaves('anime-list', data.anime);
+  renderSaves('movies-list', data.movies);
+  document.getElementById('contact-message').textContent = data.contact.message;
+  document.getElementById('contact-social').innerHTML = data.social.map(function (social) {
+    return '<a href="' + social.url + '" target="_blank" rel="noopener">[' + social.name + ']</a>';
+  }).join('');
+}());

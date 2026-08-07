@@ -84,7 +84,6 @@
   if (contactSocial) {
     contactSocial.innerHTML = d.social.map(function (s) {
       return '<a href="' + s.url + '" target="_blank" rel="noopener" aria-label="' + s.name + '">' +
-        (s.icon ? '<span class="social-icon">' + s.icon + '</span>' : '') +
         '<span>' + s.name + '</span></a>';
     }).join('');
   }

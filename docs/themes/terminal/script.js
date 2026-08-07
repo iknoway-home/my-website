@@ -30,7 +30,7 @@
   var animeGrid = document.getElementById('anime-grid');
   if (animeGrid) {
     animeGrid.innerHTML = d.anime.map(function (a, i) {
-      return '<article class="work-card reveal">' +
+      return '<article class="directory-row reveal">' +
         '<div class="work-number">-rw-r--r-- 1 iknoway anime ' + String(i + 1).padStart(2, '0') + '</div>' +
         '<h3>' + a.title + '</h3>' +
         '<p>' + a.comment + '</p>' +
@@ -42,7 +42,7 @@
   var moviesGrid = document.getElementById('movies-grid');
   if (moviesGrid) {
     moviesGrid.innerHTML = d.movies.map(function (m, i) {
-      return '<article class="work-card reveal">' +
+      return '<article class="directory-row reveal">' +
         '<div class="work-number">-rw-r--r-- 1 iknoway movies ' + String(i + 1).padStart(2, '0') + '</div>' +
         '<h3>' + m.title + '</h3>' +
         '<p>' + m.comment + '</p>' +
@@ -57,7 +57,6 @@
   if (contactSocial) {
     contactSocial.innerHTML = d.social.map(function (s) {
       return '<a href="' + s.url + '" target="_blank" rel="noopener" aria-label="' + s.name + '">' +
-        (s.icon ? '<span class="social-icon">' + s.icon + '</span>' : '') +
         '<span>' + s.name + '</span></a>';
     }).join('');
   }
@@ -68,26 +67,13 @@ window.addEventListener('scroll', function () {
   header.classList.toggle('scrolled', window.scrollY > 60);
 }, { passive: true });
 
-if (!CSS.supports('animation-timeline', 'view()')) {
-  var revealEls = document.querySelectorAll('.reveal');
-  var observer = new IntersectionObserver(function (entries) {
-    entries.forEach(function (entry) {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1 });
-  revealEls.forEach(function (el) { observer.observe(el); });
-}
-
 var sections = document.querySelectorAll('section[id]');
 var navLinks = document.querySelectorAll('.nav-links a');
 var navObs = new IntersectionObserver(function (entries) {
   entries.forEach(function (entry) {
     if (entry.isIntersecting) {
       navLinks.forEach(function (a) {
-        a.style.color = a.getAttribute('href') === '#' + entry.target.id ? 'var(--green)' : '';
+        a.style.color = a.getAttribute('href') === '#' + entry.target.id ? 'var(--bright)' : '';
       });
     }
   });

@@ -16,7 +16,6 @@
   --text: #e8edf5;
   --muted: #8792a3;
   --accent: #70e1b8;
-  --accent-2: #8ab4ff;
   --warn: #ffd166;
   --font: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
   --max-w: 1180px;
@@ -37,13 +36,7 @@ body {
   margin: 0;
   overflow-x: hidden;
   color: var(--text);
-  background:
-    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    radial-gradient(circle at 12% 18%, rgba(112, 225, 184, 0.14), transparent 32rem),
-    radial-gradient(circle at 88% 6%, rgba(138, 180, 255, 0.12), transparent 30rem),
-    var(--bg);
-  background-size: 28px 28px, 28px 28px, auto, auto, auto;
+  background: var(--bg);
   font-family: var(--font);
   line-height: 1.65;
 }
@@ -53,9 +46,8 @@ a {
 }
 
 .site-header {
-  background: rgba(12, 13, 16, 0.86);
+  background: var(--bg);
   border-bottom: 1px solid var(--line);
-  backdrop-filter: blur(14px);
 }
 
 .nav-logo {
@@ -76,7 +68,7 @@ a {
 .nav-switch {
   border: 1px solid var(--line);
   color: var(--accent);
-  background: rgba(112, 225, 184, 0.06);
+  background: transparent;
   font-size: 0.78rem;
   text-decoration: none;
 }
@@ -125,9 +117,7 @@ h2 {
   margin: 0 auto;
   overflow: auto;
   border: 1px solid var(--line);
-  border-radius: 8px;
-  background: rgba(21, 23, 29, 0.92);
-  box-shadow: 0 20px 70px rgba(0, 0, 0, 0.32);
+  background: var(--panel);
   font-size: clamp(0.72rem, 1.8vw, 0.9rem);
   line-height: 1.65;
   tab-size: 2;
@@ -154,6 +144,7 @@ h2 {
   color: var(--muted);
   text-align: right;
   user-select: none;
+  font-variant-numeric: tabular-nums;
 }
 
 .code-line > span {
@@ -182,7 +173,6 @@ h2 {
   margin-top: 22px;
   padding: 0 18px;
   border: 1px solid var(--accent);
-  border-radius: 4px;
   color: var(--accent);
   text-decoration: none;
 }
@@ -199,10 +189,6 @@ footer {
 }
 
 @media (max-width: 760px) {
-  .code-frame {
-    border-radius: 4px;
-  }
-
   .code-line::before {
     width: 3.3rem;
     padding-inline: 10px;

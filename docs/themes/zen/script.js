@@ -47,7 +47,6 @@
   if (contactSocial) {
     contactSocial.innerHTML = d.social.map(function (s) {
       return '<a href="' + s.url + '" target="_blank" rel="noopener" aria-label="' + s.name + '">' +
-        (s.icon ? '<span class="social-icon">' + s.icon + '</span>' : '') +
         '<span>' + s.name + '</span></a>';
     }).join('');
   }
@@ -57,19 +56,6 @@ var header = document.getElementById('site-header');
 window.addEventListener('scroll', function () {
   header.classList.toggle('scrolled', window.scrollY > 60);
 }, { passive: true });
-
-if (!CSS.supports('animation-timeline', 'view()')) {
-  var revealEls = document.querySelectorAll('.reveal');
-  var observer = new IntersectionObserver(function (entries) {
-    entries.forEach(function (entry) {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1 });
-  revealEls.forEach(function (el) { observer.observe(el); });
-}
 
 var sections = document.querySelectorAll('section[id]');
 var navLinks = document.querySelectorAll('.nav-links a');

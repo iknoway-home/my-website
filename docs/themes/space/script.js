@@ -21,15 +21,15 @@
   var facts = document.getElementById('about-facts');
   if (facts) {
     facts.innerHTML = d.profile.facts.map(function (f) {
-      return '<div class="fact-hud"><div class="fact-label">' + f.label + '</div><div class="fact-value">' + f.value + '</div></div>';
+      return '<div class="fact-row"><div class="fact-label">' + f.label + '</div><div class="fact-value">' + f.value + '</div></div>';
     }).join('');
   }
 
-  function renderCards(gridId, items) {
+  function renderLog(gridId, items) {
     var grid = document.getElementById(gridId);
     if (!grid) return;
     grid.innerHTML = items.map(function (item, i) {
-      return '<article class="work-card reveal">' +
+      return '<article class="mission-row reveal">' +
         '<div class="work-number">LOG-' + String(i + 1).padStart(3, '0') + '</div>' +
         '<h3>' + item.title + '</h3>' +
         '<p>' + item.comment + '</p>' +
@@ -38,8 +38,8 @@
     }).join('');
   }
 
-  renderCards('anime-grid', d.anime);
-  renderCards('movies-grid', d.movies);
+  renderLog('anime-grid', d.anime);
+  renderLog('movies-grid', d.movies);
 
   var contactMsg = document.getElementById('contact-message');
   var contactSocial = document.getElementById('contact-social');
@@ -47,7 +47,6 @@
   if (contactSocial) {
     contactSocial.innerHTML = d.social.map(function (s) {
       return '<a href="' + s.url + '" target="_blank" rel="noopener" aria-label="' + s.name + '">' +
-        (s.icon ? '<span class="social-icon">' + s.icon + '</span>' : '') +
         '<span>' + s.name + '</span></a>';
     }).join('');
   }
@@ -57,21 +56,6 @@ var header = document.getElementById('site-header');
 window.addEventListener('scroll', function () {
   header.classList.toggle('scrolled', window.scrollY > 60);
 }, { passive: true });
-
-if (!CSS.supports('animation-timeline', 'view()')) {
-  var revealEls = document.querySelectorAll('.reveal');
-  var observer = new IntersectionObserver(function (entries) {
-    entries.forEach(function (entry) {
-      if (entry.isIntersecting) {
-        var siblings = Array.from(entry.target.parentElement.querySelectorAll('.reveal'));
-        var delay = siblings.indexOf(entry.target) * 70;
-        setTimeout(function () { entry.target.classList.add('visible'); }, delay);
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1 });
-  revealEls.forEach(function (el) { observer.observe(el); });
-}
 
 var sections = document.querySelectorAll('section[id]');
 var navLinks = document.querySelectorAll('.nav-links a');

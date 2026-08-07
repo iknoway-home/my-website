@@ -2,13 +2,6 @@
    CLASSY THEME — script.js
    ============================================================ */
 
-// ── Bento size helper ────────────────────────────────────
-function bentoClass(i, total) {
-  if (total === 9 && (i === 0 || i === 4 || i === 7)) return ' bento-wide';
-  if (total === 6 && (i === 0 || i === 3)) return ' bento-wide';
-  return '';
-}
-
 // ── Render shared data ───────────────────────────────────
 (function renderData() {
   const d = window.__data;
@@ -21,16 +14,6 @@ function bentoClass(i, total) {
   if (heroName) heroName.textContent = d.profile.name;
   if (heroRole) heroRole.textContent = d.profile.role;
   if (heroTagline) heroTagline.innerHTML = d.profile.tagline.replace(/\n/g, '<br>');
-
-  // GSAP SplitText — hero name
-  requestAnimationFrame(function () {
-    if (!window.__utils.prefersReducedMotion() && window.gsap && window.SplitText && heroName) {
-      const split = new SplitText(heroName, { type: 'chars' });
-      gsap.from(split.chars, {
-        opacity: 0, y: 30, duration: 0.6, stagger: 0.03, ease: 'power3.out',
-      });
-    }
-  });
 
   // About paragraphs
   const aboutP = document.getElementById('about-paragraphs');
@@ -50,7 +33,7 @@ function bentoClass(i, total) {
   const animeGrid = document.getElementById('anime-grid');
   if (animeGrid) {
     animeGrid.innerHTML = d.anime.map((a, i) =>
-      '<article class="work-card reveal' + bentoClass(i, d.anime.length) + '">' +
+      '<article class="work-card reveal">' +
         '<div class="work-number">' + String(i + 1).padStart(2, '0') + '</div>' +
         '<h3>' + a.title + '</h3>' +
         '<p>' + a.comment + '</p>' +
@@ -63,7 +46,7 @@ function bentoClass(i, total) {
   const moviesGrid = document.getElementById('movies-grid');
   if (moviesGrid) {
     moviesGrid.innerHTML = d.movies.map((m, i) =>
-      '<article class="work-card reveal' + bentoClass(i, d.movies.length) + '">' +
+      '<article class="work-card reveal">' +
         '<div class="work-number">' + String(i + 1).padStart(2, '0') + '</div>' +
         '<h3>' + m.title + '</h3>' +
         '<p>' + m.comment + '</p>' +
@@ -79,7 +62,6 @@ function bentoClass(i, total) {
   if (contactSocial) {
     contactSocial.innerHTML = d.social.map(s =>
       '<a href="' + s.url + '" target="_blank" rel="noopener" aria-label="' + s.name + '">' +
-      (s.icon ? '<span class="social-icon">' + s.icon + '</span>' : '') +
       '<span>' + s.name + '</span></a>'
     ).join('');
   }
@@ -132,43 +114,3 @@ const navObserver = new IntersectionObserver(
 );
 
 sections.forEach(s => navObserver.observe(s));
-
-// ── Subtle cursor trail (desktop only) ────────────────────
-if (window.matchMedia('(pointer: fine)').matches) {
-  const TRAIL_LEN = 6;
-  const trail = [];
-
-  for (let i = 0; i < TRAIL_LEN; i++) {
-    const dot = document.createElement('div');
-    dot.style.cssText = `
-      position: fixed;
-      pointer-events: none;
-      z-index: 9999;
-      width: ${3 + i}px;
-      height: ${3 + i}px;
-      border-radius: 50%;
-      background: rgba(212, 168, 48, ${0.16 - i * 0.02});
-      transform: translate(-50%, -50%);
-      transition: left ${0.04 + i * 0.03}s ease,
-                  top  ${0.04 + i * 0.03}s ease;
-    `;
-    document.body.appendChild(dot);
-    trail.push(dot);
-  }
-
-  document.addEventListener('mousemove', e => {
-    trail.forEach(d => {
-      d.style.left = e.clientX + 'px';
-      d.style.top  = e.clientY + 'px';
-    });
-  });
-}
-
-// ── Parallax on hero light shaft ─────────────────────────
-const lightShaft = document.querySelector('.hero-light-shaft');
-if (lightShaft) {
-  window.addEventListener('scroll', () => {
-    const y = window.scrollY;
-    lightShaft.style.transform = `translateY(${y * 0.15}px)`;
-  }, { passive: true });
-}
