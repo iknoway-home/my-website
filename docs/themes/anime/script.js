@@ -5,13 +5,6 @@
 
 'use strict';
 
-// ── Bento size helper ────────────────────────────────────
-function bentoClass(i, total) {
-  if (total === 9 && (i === 0 || i === 4 || i === 7)) return ' bento-wide';
-  if (total === 6 && (i === 0 || i === 3)) return ' bento-wide';
-  return '';
-}
-
 // ── Render shared data ───────────────────────────────────
 (function renderData() {
   var d = window.__data;
@@ -74,7 +67,7 @@ function bentoClass(i, total) {
   var animeGrid = document.getElementById('anime-grid');
   if (animeGrid) {
     animeGrid.innerHTML = d.anime.map(function (a, i) {
-      return '<article class="anime-card reveal' + bentoClass(i, d.anime.length) + '">' +
+      return '<article class="anime-card reveal">' +
         '<div class="card-num">' + String(i + 1).padStart(2, '0') + '</div>' +
         '<h3>' + a.title + '</h3>' +
         '<p>' + a.comment + '</p>' +
@@ -87,7 +80,7 @@ function bentoClass(i, total) {
   var moviesGrid = document.getElementById('movies-grid');
   if (moviesGrid) {
     moviesGrid.innerHTML = d.movies.map(function (m, i) {
-      return '<article class="anime-card reveal' + bentoClass(i, d.movies.length) + '">' +
+      return '<article class="anime-card reveal">' +
         '<div class="card-num">' + String(i + 1).padStart(2, '0') + '</div>' +
         '<h3>' + m.title + '</h3>' +
         '<p>' + m.comment + '</p>' +
@@ -103,7 +96,6 @@ function bentoClass(i, total) {
   if (contactSocial) {
     contactSocial.innerHTML = d.social.map(function (s) {
       return '<a href="' + s.url + '" target="_blank" rel="noopener" aria-label="' + s.name + '">' +
-        (s.icon ? '<span class="social-icon">' + s.icon + '</span>' : '') +
         '<span>' + s.name + '</span></a>';
     }).join('');
   }

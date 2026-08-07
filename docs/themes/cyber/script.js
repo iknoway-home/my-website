@@ -5,13 +5,6 @@
 
 'use strict';
 
-// ── Bento size helper ────────────────────────────────────
-function bentoClass(i, total) {
-  if (total === 9 && (i === 0 || i === 4 || i === 7)) return ' bento-wide';
-  if (total === 6 && (i === 0 || i === 3)) return ' bento-wide';
-  return '';
-}
-
 // ── Render shared data ───────────────────────────────────
 (function renderData() {
   const d = window.__data;
@@ -82,15 +75,13 @@ function bentoClass(i, total) {
   const animeGrid = document.getElementById('anime-grid');
   if (animeGrid) {
     animeGrid.innerHTML = d.anime.map((a, i) =>
-      '<article class="work-card reveal' + bentoClass(i, d.anime.length) + '">' +
-        '<div class="card-slash"></div>' +
+      '<article class="work-card reveal">' +
         '<div class="card-inner">' +
           '<div class="card-num">' + String(i + 1).padStart(2, '0') + '</div>' +
           '<h3>' + a.title + '</h3>' +
           '<p>' + a.comment + '</p>' +
           '<div class="card-tags">' + a.tags.map(t => '<span>' + t + '</span>').join('') + '</div>' +
         '</div>' +
-        '<div class="card-glow"></div>' +
       '</article>'
     ).join('');
   }
@@ -99,15 +90,13 @@ function bentoClass(i, total) {
   const moviesGrid = document.getElementById('movies-grid');
   if (moviesGrid) {
     moviesGrid.innerHTML = d.movies.map((m, i) =>
-      '<article class="work-card reveal' + bentoClass(i, d.movies.length) + '">' +
-        '<div class="card-slash"></div>' +
+      '<article class="work-card reveal">' +
         '<div class="card-inner">' +
           '<div class="card-num">' + String(i + 1).padStart(2, '0') + '</div>' +
           '<h3>' + m.title + '</h3>' +
           '<p>' + m.comment + '</p>' +
           '<div class="card-tags">' + m.tags.map(t => '<span>' + t + '</span>').join('') + '</div>' +
         '</div>' +
-        '<div class="card-glow"></div>' +
       '</article>'
     ).join('');
   }
@@ -123,7 +112,6 @@ function bentoClass(i, total) {
   if (contactSocial) {
     contactSocial.innerHTML = d.social.map(s =>
       '<a href="' + s.url + '" target="_blank" rel="noopener" aria-label="' + s.name + '">' +
-      (s.icon ? '<span class="social-icon">' + s.icon + '</span>' : '') +
       '<span>' + s.name + '</span></a>'
     ).join('');
   }
@@ -257,18 +245,6 @@ if (!CSS.supports('animation-timeline', 'view()')) {
   revealEls.forEach(el => revealObserver.observe(el));
 }
 
-// ── Power level bar ───────────────────────────────────────
-const plFill = document.querySelector('.pl-fill');
-if (plFill) {
-  const plObserver = new IntersectionObserver(entries => {
-    if (entries[0].isIntersecting) {
-      setTimeout(() => plFill.classList.add('animated'), 300);
-      plObserver.disconnect();
-    }
-  }, { threshold: 0.5 });
-  plObserver.observe(plFill);
-}
-
 // ── Counter animation (hero stats) ────────────────────────
 function animateCount(el, target, duration = 1400) {
   const start = performance.now();
@@ -347,17 +323,6 @@ if (heroTitle) {
     }
   }, 800);
 }
-
-// ── Power-up effect on card hover ─────────────────────────
-document.querySelectorAll('.work-card').forEach(card => {
-  card.addEventListener('mouseenter', () => {
-    card.style.transition = 'border-color 0.1s, box-shadow 0.1s, transform 0.2s';
-    card.style.transform = 'translateY(-4px)';
-  });
-  card.addEventListener('mouseleave', () => {
-    card.style.transform = '';
-  });
-});
 
 // ── CRT flicker (very subtle, rare) ──────────────────────
 setInterval(() => {
