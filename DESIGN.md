@@ -208,8 +208,10 @@ UI、画面構成、デザインシステムに関わる変更をした場合は
 
 #### フォント・レイアウト・アニメーション
 
-- 江戸の版元の題字と読み物の関係をそのまま二書体に割り当てる。見出し系（`.nav-logo` / `.hero h1` / `.section-title`・`.game-title`・`.project-title` / `.kicker` 系 / `.seal`）は `--font-brush`（`Yuji Syuku` = 毛筆楷書）、本文・目録行・facts は `--font`（`Zen Old Mincho`）。
-- `Yuji Syuku` はウェイト 400 のみ。合成ボールドが筆跡を潰すので、見出しの強弱は `font-weight` ではなくサイズ・色（藍 / 朱）・字間で付ける。筆書体は字面が大きいので、見出しの `line-height` は明朝より広めに取る。
+- 江戸の版元の題字と読み物の関係をそのまま書体に割り当てる。見出し系（`.nav-logo` / `.hero h1` / `.section-title`・`.game-title`・`.project-title` / `.kicker` 系 / `.seal`）は `--font-brush`（`Yuji Syuku` = 毛筆楷書）、本文・目録行・facts は `--font`（`New Tegomin` = 筆脈の残る明朝）。
+- `Yuji Syuku` も `New Tegomin` もウェイト 400 のみ。合成ボールドが筆跡を潰すので、強弱は `font-weight` ではなくサイズ・色（藍 / 朱）・字間で付ける。共通層が `font-weight:700` を指定する箇所（`.print-entry h3` 系、`.game-kicker` / `.project-kicker`）はテーマ側で 400 に戻す。
+- ヘッダーとサイトマップ帯だけは例外で `--font-ui`（`Zen Old Mincho`）を使う。共通層がここに bold を指定しており、実ウェイトを持つ書体でないと合成ボールドで潰れるため、世界観より可読性を優先する。
+- 筆書体は字面が大きいので、見出しの `line-height` は明朝より広めに取る。
 - hero は左に藍地の風景版（日輪 `.sun` と二本の `.wave`）、右に金の帯で区切った題字面を置く2カラム。モバイルでは風景を上、題字を下に積む。
 - アニメ・映画・ゲーム・成果物は紙片カードではなく、罫線で区切った目録行（`.print-entry` / `.game-card` / `.project-card`）の4カラム構成にする。
 - `.reveal` は `opacity` と `translateY` のみ。カードの hover 変形は `--human-card-transform:none` で止めている。`prefersReducedMotion()` が有効なら即時表示する。

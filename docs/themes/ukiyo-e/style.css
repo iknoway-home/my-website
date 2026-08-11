@@ -1,13 +1,17 @@
 /* UKIYO-E — flat carved color fields and a bound catalogue */
-:root{--bg:#ddd3bc;--paper:#eee5cf;--ink:#172d3a;--muted:#5b635f;--indigo:#234b5b;--verm:#a23f32;--gold:#a48449;--line:#9b927f;--font:'Zen Old Mincho','Yu Mincho',serif;--font-brush:'Yuji Syuku','Yu Mincho',serif;--section-pad:clamp(72px,10vw,132px);--human-focus:var(--verm);--human-grain-opacity:.06;--human-grain-blend:multiply;--human-card-transform:none}
+:root{--bg:#ddd3bc;--paper:#eee5cf;--ink:#172d3a;--muted:#5b635f;--indigo:#234b5b;--verm:#a23f32;--gold:#a48449;--line:#9b927f;--font:'New Tegomin','Yu Mincho',serif;--font-ui:'Zen Old Mincho','Yu Mincho',serif;--font-brush:'Yuji Syuku','Yu Mincho',serif;--section-pad:clamp(72px,10vw,132px);--human-focus:var(--verm);--human-grain-opacity:.06;--human-grain-blend:multiply;--human-card-transform:none}
 
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);line-height:1.9;background-image:repeating-linear-gradient(0deg,#172d3a09 0 1px,transparent 1px 6px)}
 a{color:inherit;text-decoration-color:var(--verm)}
 ul{list-style:none;padding:0;margin:0}
+/* 本文の New Tegomin と見出しの Yuji Syuku はどちらもウェイト 400 のみ。
+   合成ボールドが筆跡を潰すので、強弱は字間・色・サイズで付ける。
+   共通層が bold を指定するヘッダー・サイトマップ帯だけは、可読性を優先して
+   実ウェイトを持つ --font-ui に逃がす。 */
+.site-header,.site-map-strip{font-family:var(--font-ui)}
 .site-header{background:var(--bg);border-bottom:1px solid var(--line)}
-/* 毛筆書体はウェイト 400 のみ。合成ボールドが筆跡を潰すので強弱は字間・色で付ける */
 .nav-logo{color:var(--indigo);font-family:var(--font-brush);font-weight:400;letter-spacing:.1em}
 .nav-links a{color:var(--ink);font-size:.76rem}
 .nav-links a:hover{color:var(--verm)}
@@ -21,6 +25,7 @@ ul{list-style:none;padding:0;margin:0}
 .wave-two{bottom:4%;border-top-width:7px;transform:skewY(5deg)}
 .hero-copy{position:relative;padding:clamp(52px,8vw,110px);border-left:10px solid var(--gold)}
 .kicker,.game-kicker,.project-kicker{font-family:var(--font-brush)}
+.section :is(.game-kicker,.project-kicker){font-weight:400}
 .kicker{margin:0 0 10px;color:var(--verm);font-size:.8rem;letter-spacing:.2em}
 .hero h1{margin:0;color:var(--indigo);font-family:var(--font-brush);font-size:clamp(3.2rem,8.5vw,7.4rem);line-height:1.12;letter-spacing:.03em}
 .hero-copy>p:not(.kicker):not(.tagline){color:var(--muted);font-size:.82rem}
@@ -44,7 +49,7 @@ ul{list-style:none;padding:0;margin:0}
 .print-entry>*,.section .game-card>*,.section .project-card>*{min-width:0}
 .tags,.section .game-tags,.section .project-tags{max-width:100%;min-width:0;flex-wrap:wrap;overflow-wrap:anywhere}
 .number,.game-index,.project-index{margin:0;color:var(--verm);font-size:.72rem;font-variant-numeric:tabular-nums}
-.print-entry h3,.game-card h3,.project-card h3{margin:0;color:var(--indigo);font-size:1.04rem}
+.print-entry h3,.game-card h3,.project-card h3{margin:0;color:var(--indigo);font-weight:400;font-size:1.1rem;letter-spacing:.02em}
 .print-entry p,.game-card>p,.project-card>p{margin:0;color:var(--muted);font-size:.82rem}
 .tags,.game-tags,.project-tags{display:flex;flex-wrap:wrap;gap:3px 12px;color:var(--verm);font-size:.68rem}
 .game-kicker,.project-kicker{margin:0;color:var(--verm);font-size:.8rem;letter-spacing:.18em}
