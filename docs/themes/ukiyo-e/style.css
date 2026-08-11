@@ -1,5 +1,5 @@
 /* UKIYO-E — flat carved color fields and a bound catalogue */
-:root{--bg:#ddd3bc;--paper:#eee5cf;--ink:#172d3a;--muted:#5b635f;--indigo:#234b5b;--verm:#a23f32;--gold:#a48449;--line:#9b927f;--font:'Noto Serif JP','Yu Mincho',serif;--section-pad:clamp(72px,10vw,132px);--human-focus:var(--verm);--human-grain-opacity:.06;--human-grain-blend:multiply;--human-card-transform:none}
+:root{--bg:#ddd3bc;--paper:#eee5cf;--ink:#172d3a;--muted:#5b635f;--indigo:#234b5b;--verm:#a23f32;--gold:#a48449;--line:#9b927f;--font:'Zen Old Mincho','Yu Mincho',serif;--font-brush:'Yuji Syuku','Yu Mincho',serif;--section-pad:clamp(72px,10vw,132px);--human-focus:var(--verm);--human-grain-opacity:.06;--human-grain-blend:multiply;--human-card-transform:none}
 
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -7,7 +7,8 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);line
 a{color:inherit;text-decoration-color:var(--verm)}
 ul{list-style:none;padding:0;margin:0}
 .site-header{background:var(--bg);border-bottom:1px solid var(--line)}
-.nav-logo{color:var(--indigo);font-weight:700;letter-spacing:.12em}
+/* 毛筆書体はウェイト 400 のみ。合成ボールドが筆跡を潰すので強弱は字間・色で付ける */
+.nav-logo{color:var(--indigo);font-family:var(--font-brush);font-weight:400;letter-spacing:.1em}
 .nav-links a{color:var(--ink);font-size:.76rem}
 .nav-links a:hover{color:var(--verm)}
 .nav-switch{border:1px solid var(--indigo);font-size:.72rem}
@@ -19,15 +20,16 @@ ul{list-style:none;padding:0;margin:0}
 .wave-one{bottom:25%}
 .wave-two{bottom:4%;border-top-width:7px;transform:skewY(5deg)}
 .hero-copy{position:relative;padding:clamp(52px,8vw,110px);border-left:10px solid var(--gold)}
-.kicker{margin:0 0 10px;color:var(--verm);font-size:.75rem;letter-spacing:.2em}
-.hero h1{margin:0;color:var(--indigo);font-size:clamp(3.5rem,9vw,8rem);line-height:1;letter-spacing:.03em}
+.kicker,.game-kicker,.project-kicker{font-family:var(--font-brush)}
+.kicker{margin:0 0 10px;color:var(--verm);font-size:.8rem;letter-spacing:.2em}
+.hero h1{margin:0;color:var(--indigo);font-family:var(--font-brush);font-size:clamp(3.2rem,8.5vw,7.4rem);line-height:1.12;letter-spacing:.03em}
 .hero-copy>p:not(.kicker):not(.tagline){color:var(--muted);font-size:.82rem}
 .tagline{max-width:34em;margin-top:32px}
-.seal{display:block;width:42px;margin-top:26px;border:2px solid var(--verm);color:var(--verm);text-align:center;font-weight:700}
+.seal{display:block;width:42px;margin-top:26px;border:2px solid var(--verm);color:var(--verm);text-align:center;font-family:var(--font-brush);font-weight:400;font-size:1.15rem}
 
 .section{min-height:100svh;padding:var(--section-pad) clamp(22px,6vw,80px)}
 .container{max-width:1020px;margin:auto}
-.section-title,.game-title,.project-title{margin:0 0 38px;color:var(--indigo);font-size:clamp(2.2rem,6vw,4rem);line-height:1.2}
+.section-title,.game-title,.project-title{margin:0 0 38px;color:var(--indigo);font-family:var(--font-brush);font-size:clamp(2.1rem,5.6vw,3.8rem);line-height:1.3}
 .about-layout{display:grid;grid-template-columns:1.3fr .7fr;gap:clamp(36px,8vw,96px)}
 .about-text{max-width:62ch}
 .facts{border-top:3px double var(--indigo)}
@@ -45,7 +47,7 @@ ul{list-style:none;padding:0;margin:0}
 .print-entry h3,.game-card h3,.project-card h3{margin:0;color:var(--indigo);font-size:1.04rem}
 .print-entry p,.game-card>p,.project-card>p{margin:0;color:var(--muted);font-size:.82rem}
 .tags,.game-tags,.project-tags{display:flex;flex-wrap:wrap;gap:3px 12px;color:var(--verm);font-size:.68rem}
-.game-kicker,.project-kicker{margin:0;color:var(--verm);font-size:.75rem;letter-spacing:.18em}
+.game-kicker,.project-kicker{margin:0;color:var(--verm);font-size:.8rem;letter-spacing:.18em}
 .contact{display:flex;flex-direction:column;justify-content:center;background:var(--indigo);color:var(--paper);min-height:75svh}
 .contact .section-title,.contact .kicker{color:var(--paper)}
 .contact p{max-width:62ch}

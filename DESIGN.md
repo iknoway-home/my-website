@@ -196,19 +196,23 @@ UI、画面構成、デザインシステムに関わる変更をした場合は
 
 #### カラーパレット
 
-| 役割 | 色 |
-|---|---|
-| 和紙 | `#e9e2d0` |
-| 藍 | `#17445a` |
-| 朱 | `#a4382e` |
-| 金 | `#b28b43` |
-| 墨 | `#172c3b` |
+| 役割 | 変数 | 色 |
+|---|---|---|
+| 和紙 | `--bg` | `#ddd3bc` |
+| 刷り面 | `--paper` | `#eee5cf` |
+| 藍 | `--indigo` | `#234b5b` |
+| 朱 | `--verm` | `#a23f32` |
+| 金 | `--gold` | `#a48449` |
+| 罫 | `--line` | `#9b927f` |
+| 墨 | `--ink` | `#172d3a` |
 
 #### フォント・レイアウト・アニメーション
 
-- `Noto Serif JP` を本文・見出しに使い、和紙の上に版画のような大きな hero を置く。
-- hero の藍・朱・金の円と線を抽象的な装飾ではなく版の見当として使い、カードは紙片の2列構成にする。
-- `.reveal` は `opacity` と `translateY` のみ。`prefersReducedMotion()` が有効なら即時表示する。
+- 江戸の版元の題字と読み物の関係をそのまま二書体に割り当てる。見出し系（`.nav-logo` / `.hero h1` / `.section-title`・`.game-title`・`.project-title` / `.kicker` 系 / `.seal`）は `--font-brush`（`Yuji Syuku` = 毛筆楷書）、本文・目録行・facts は `--font`（`Zen Old Mincho`）。
+- `Yuji Syuku` はウェイト 400 のみ。合成ボールドが筆跡を潰すので、見出しの強弱は `font-weight` ではなくサイズ・色（藍 / 朱）・字間で付ける。筆書体は字面が大きいので、見出しの `line-height` は明朝より広めに取る。
+- hero は左に藍地の風景版（日輪 `.sun` と二本の `.wave`）、右に金の帯で区切った題字面を置く2カラム。モバイルでは風景を上、題字を下に積む。
+- アニメ・映画・ゲーム・成果物は紙片カードではなく、罫線で区切った目録行（`.print-entry` / `.game-card` / `.project-card`）の4カラム構成にする。
+- `.reveal` は `opacity` と `translateY` のみ。カードの hover 変形は `--human-card-transform:none` で止めている。`prefersReducedMotion()` が有効なら即時表示する。
 
 ### gothic テーマ
 
