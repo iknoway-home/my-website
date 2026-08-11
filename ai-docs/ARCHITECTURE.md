@@ -38,7 +38,7 @@
 | コンテンツデータ | 全テーマ共通のコンテンツ（単一の正） | `docs/shared/data.js` |
 | 共通資産 | ユーティリティ、共通セクション挿入、共通クローム寸法 | `docs/shared/` |
 | テーマ | 世界観（配色・フォント・演出）と `window.__data` の描画 | `docs/themes/<name>/` |
-| AI ドキュメント | 作業ルール・設計・運用の記録 | `AGENTS.md`, `DESIGN.md`, `ai-docs/`, `sops/` |
+| AI ドキュメント | 作業ルール・設計・運用の記録 | `AGENTS.md`, `DESIGN.md`, `ai-docs/`, `.agents/skills/` |
 
 ## データフロー
 

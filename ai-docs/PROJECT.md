@@ -68,7 +68,7 @@ AI エージェントや新しい開発者が最初に読む前提情報とし�
 | `ai-docs/ENVIRONMENT.md` | 環境と設定 |
 | `ai-docs/TESTING.md` | 確認手順 |
 | `ai-docs/OPERATIONS.md` | 運用・デプロイ |
-| `sops/` | 再利用手順 |
+| `.agents/skills/` | 再利用する作業手順（SKILL.md） |
 
 ## 現在の優先事項
 
@@ -80,7 +80,7 @@ AI エージェントや新しい開発者が最初に読む前提情報とし�
 
 | 日付 | 変更 | 関連ファイル |
 |---|---|---|
-| 2026-07-06 | AI ドキュメント体系（AGENTS.md / ai-docs / sops / 鮮度チェック）を導入 | `AGENTS.md`, `ai-docs/`, `sops/`, `scripts/ai-docs-status.sh` |
+| 2026-07-06 | AI ドキュメント体系（AGENTS.md / ai-docs / sops / 鮮度チェック）を導入 | `AGENTS.md`, `ai-docs/`, `sops/`, `scripts/ai-docs-check.sh` |
 | 2026-07 頃 | winxp テーマを追加（未コミット） | `docs/themes/winxp/` |
 
 ## 未解決の論点

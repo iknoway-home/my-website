@@ -1,8 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(bash scripts/ai-docs-status.sh)",
-      "Bash(bash scripts/ai-docs-status.sh:*)"
+      "Bash(bash scripts/ai-docs-check.sh)",
+      "Bash(bash scripts/ai-docs-check.sh:*)"
     ]
   },
   "hooks": {
@@ -11,7 +11,11 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash scripts/ai-docs-status.sh"
+            "command": "bash",
+            "args": [
+              "${CLAUDE_PROJECT_DIR}/scripts/ai-docs-check.sh"
+            ],
+            "timeout": 15
           }
         ]
       }

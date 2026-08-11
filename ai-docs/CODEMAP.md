@@ -36,7 +36,7 @@
 | スタイル / テーマ方針 | `DESIGN.md` | 各テーマの `style.css` | カラーパレット・フォント・演出の詳細 |
 | 確認手順 | `ai-docs/TESTING.md` | — | ローカルサーバーでの手動確認 |
 | デプロイ | `ai-docs/OPERATIONS.md` | — | GitHub Pages（プッシュ = デプロイ） |
-| AI docs 鮮度チェック | `scripts/ai-docs-status.sh` | `.claude/settings.json`, `.github/workflows/ai-docs-freshness.yml` | SessionStart フックと週次 CI から実行 |
+| AI docs 構成チェック | `scripts/ai-docs-check.sh` | `.claude/settings.json`, `.github/workflows/ai-docs-check.yml` | SessionStart フックと PR / 月次 CI から実行 |
 
 ## 置き場所の目安
 
@@ -63,7 +63,7 @@
 - `docs/themes/handheld/` — 緑液晶のレトロ携帯ゲーム機テーマ
 | `docs/shared/` | 全テーマ共通資産 | 読み込み順に注意（`AGENTS.md` 参照） |
 | `ai-docs/` | 設計、運用、意思決定 | 古い情報を残さない |
-| `sops/` | 再利用手順 | 作業が固定化したら追加 |
+| `.agents/skills/` | 再利用する作業手順（SKILL.md） | 作業が固定化したら追加 |
 | `scripts/` | 補助スクリプト | 鮮度チェックの定数はスクリプト先頭 |
 
 ## 共通処理

@@ -11,7 +11,7 @@
 - 障害対応や復旧手順を追加・変更した。
 - 運用に使う外部サービスや権限を変えた。
 
-具体的な手順が固定化したら `sops/*.sop.md` に切り出してください。
+具体的な手順が固定化したら `create-skill` スキルに従ってスキル化してください。
 
 ## 環境
 
@@ -32,7 +32,7 @@
 
 ## デプロイ手順
 
-ビルドステップはない。詳細は `sops/release-or-deploy.sop.md` を参照。
+ビルドステップはない。詳細は `.agents/skills/release-or-deploy/SKILL.md` を参照。
 
 ```bash
 # ローカル確認のうえで
@@ -66,5 +66,5 @@ git push origin main
 
 | 症状 | 初動 | 参照 SOP |
 |---|---|---|
-| 本番でテーマが表示されない | DevTools コンソール確認 → 直近コミットを疑い `git revert` | `sops/debug-or-fix-bug.sop.md` |
+| 本番でテーマが表示されない | DevTools コンソール確認 → 直近コミットを疑い `git revert` | `ai-docs/CODEMAP.md` |
 | Pages が反映されない | GitHub の Pages ビルド状況を確認 | — |

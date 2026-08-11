@@ -1,3 +1,8 @@
+---
+name: release-or-deploy
+description: my-homepage を本番（GitHub Pages）へリリースする。「デプロイして」「公開して」「本番に上げて」と頼まれたとき、変更を反映させたいとき、または公開後に問題が出て切り戻すときに使う。main ブランチの /docs がそのまま公開されるため push = デプロイであり、push 前に必ずこの手順を確認する。
+---
+
 # リリース・デプロイする
 
 ## Overview
@@ -13,7 +18,7 @@
 ## Prerequisites
 
 - `ai-docs/OPERATIONS.md` が現在の運用と一致している。
-- `sops/run-quality-checks.sop.md` の確認が完了している。
+- `.agents/skills/run-quality-checks/SKILL.md` の確認が完了している。
 - `main` へのプッシュ権限がある。
 
 ## Steps
@@ -35,7 +40,7 @@ git diff
 
 ### 2. 品質確認を実行する
 
-`sops/run-quality-checks.sop.md` に従ってローカルサーバーで確認する。
+`.agents/skills/run-quality-checks/SKILL.md` に従ってローカルサーバーで確認する。
 
 ### 3. コミットしてプッシュする
 
@@ -76,4 +81,4 @@ git push origin main
 
 - `ai-docs/OPERATIONS.md`
 - `ai-docs/TESTING.md`
-- `sops/run-quality-checks.sop.md`
+- `.agents/skills/run-quality-checks/SKILL.md`

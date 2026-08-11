@@ -93,7 +93,7 @@
 - Canvas API（anime テーマのパーティクル）
 - IntersectionObserver API（スクロールアニメーション）
 - GitHub Pages（`main` ブランチの `/docs` を公開）
-- AI docs 鮮度チェック（`scripts/ai-docs-status.sh` / GitHub Actions / Claude Code SessionStart）
+- AI docs 構成チェック（`scripts/ai-docs-check.sh` / GitHub Actions / Claude Code SessionStart）
 
 外部ライブラリへの依存は **ゼロ** です。
 
@@ -136,9 +136,9 @@ npx serve docs
 | `CLAUDE.md` / `GEMINI.md` / `QWEN.md` | 各AIツール用入口（`AGENTS.md` へのシンボリックリンク） |
 | `DESIGN.md` | UI / UX / テーマ実装方針 |
 | `ai-docs/` | プロジェクト概要、機能マップ、設計、運用、テスト、セキュリティ |
-| `sops/` | 再利用する作業手順 |
+| `.agents/skills/` | 再利用する作業手順（SKILL.md） |
 | `.claude/commands/update-ai-docs.md` | Claude Code の `/update-ai-docs` 用コマンド |
-| `scripts/ai-docs-status.sh` | AI docs の鮮度チェック |
+| `scripts/ai-docs-check.sh` | AI docs の鮮度チェック |
 
 ---
 

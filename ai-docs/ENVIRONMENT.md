@@ -32,7 +32,7 @@
 |---|---|---|
 | `.claude/settings.json` | Claude Code の SessionStart フック（AI docs 鮮度チェック） | チーム共有設定 |
 | `.claude/settings.local.json` | 個人ローカルの許可設定 | コミットしない運用が無難 |
-| `.github/workflows/ai-docs-freshness.yml` | 週次の AI docs 鮮度チェック | 陳腐化時にイシューを作成 |
+| `.github/workflows/ai-docs-check.yml` | AI docs の構成チェック | PR で検査、月次で棚卸しイシュー |
 
 ## 外部サービス
 

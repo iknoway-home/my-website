@@ -46,7 +46,7 @@
 
 | ワークフロー | 実行タイミング | 内容 |
 |---|---|---|
-| `.github/workflows/ai-docs-freshness.yml` | 週 1 | AI docs の陳腐化を検出してリマインダーイシューを作成 |
+| `.github/workflows/ai-docs-check.yml` | PR / 月 1 | 構成の ERROR を PR で検出し、月次で棚卸しイシューを作成 |
 
 サイト本体の CI はなし（ビルド・テスト工程が存在しないため）。
 
